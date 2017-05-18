@@ -6,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const config = require('./config.js');
 const config = null;
-const BitBarWebpackProgressPlugin = require("bitbar-webpack-progress-plugin");
+// const BitBarWebpackProgressPlugin = require("bitbar-webpack-progress-plugin");
 
 
 
@@ -42,7 +42,7 @@ let plugins = [
     filename: 'bundle.css',
     allChunks: true,
   }),
-  new BitBarWebpackProgressPlugin(),
+  // new BitBarWebpackProgressPlugin(),
 //   new HtmlWebpackPlugin({
 //     domain: config.api.crm || '',
 //     template: './templates/index.ejs',

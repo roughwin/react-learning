@@ -1,40 +1,148 @@
 import React, {Component} from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
-import { Alert, message, Select } from 'antd';
+import { Alert, message, Select, Table, Icon } from 'antd';
 import 'moment/locale/zh-cn';
-
 import {observable, action, computed} from 'mobx';
-import {observer} from 'mobx-react';
+import {observer, inject, Provider} from 'mobx-react';
+
+import MyTable from 'table'
+import store from 'stroe'
 
 const Option = Select.Option;
 const rootEl = document.getElementById('root');
 
-class Store {
-    @observable todos;
-    @observable testLabelList = [];
-    @observable testLabelAll = [];
-    @observable helo = '123'
-    constructor() {
-        // console.log(this.helo);
-        this.testLabelAll = ['haha'];
-        this.todos = [{
-            title: 'helo',
-            done: false,
-        }];
-    }
-    @computed get getHelo() {
-        return this.helo + 'haha';
-    }
-    @action setData() {
-        window.setTimeout(() => {
-            this.todos[0].title = 'haha';
+const check = <span><input type="checkbox"/>{'name'}</span>
+const columns = [{
+  title: check,
+  dataIndex: 'name',
+  key: 'name',
+  render: text => <a href="#">{text}</a>,
+}, {
+  title: 'Age',
+  dataIndex: 'age',
+  key: 'age',
+}, {
+  title: 'Address',
+  dataIndex: 'address',
+  key: 'address',
+}, {
+  title: 'Action',
+  key: 'action',
+  render: (text, record) => (
+    <span>
+      <a href="#">Action 一 {record.name}</a>
+      <span className="ant-divider" />
+      <a href="#">Delete</a>
+      <span className="ant-divider" />
+      <a href="#" className="ant-dropdown-link">
+        More actions <Icon type="down" />
+      </a>
+    </span>
+  ),
+}];
 
-        }, 3000);
-        console.log('store', this.testLabelAll);
-    }
-}
+const data = [{
+  key: '1',
+  name: 'John Brown',
+  age: 32,
+  address: 'New York No. 1 Lake Park',
+}, {
+  key: '2',
+  name: 'Jim Green',
+  age: 42,
+  address: 'London No. 1 Lake Park',
+}, {
+  key: '3',
+  name: 'Joe Black',
+  age: 32,
+  address: 'Sidney No. 1 Lake Park',
+}];
+  let tabelData = [
+    {
+      name: 'score',
+      title: '直达分',
+      unit: '分',
+      type: 'number',
+      value: 0,
+      placeholder: '修改直达分',
+      editabel: false,
+    },
+    {
+      name: 'coursetime',
+      title: '课时',
+      unit: '课时',
+      type: 'number',
+      value:0,
+      placeholder: '赠送课时数',
+      editabel: false,
+    },
+    {
+      name: 'deepExplain',
+      title: '逐题精讲',
+      unit: '次',
+      type: 'number',
+      value: 0,
+      placeholder: '赠送精讲月数',
+      editabel: false,
+    },
+    {
+      name: 'spokenCorrecting',
+      title: '口语批改',
+      unit: '次',
+      type: 'number',
+      value: 0,
+      placeholder: '赠送次数',
+      editabel: false,
+    },
+    {
+      name: 'writeCorrecting',
+      title: '写作批改',
+      unit: '次',
+      type: 'number',
+      value: 0,
+      placeholder: '赠送次数',
+      editabel: false,
+    },
+    {
+      name: 'validDay',
+      title: '商品有效期',
+      unit: '天',
+      type: 'number',
+      value: 0,
+      placeholder: '赠送天数',
+      editabel: false,
+    },
+    {
+      name: 'rewrokTime',
+      title: '可重读次数',
+      unit: '次',
+      type: 'number',
+      value: 0,
+      placeholder: '赠送次数',
+      editabel: true,
+    },    
+  ]
+store.getSubject(tabelData)
+console.log('index getsubject')
+var ele = 
+  <Provider store={store}>
+    <div>
+        <Table columns={columns} dataSource={data} />
+        <MyTable></MyTable>
+    </div>
+  </Provider>
+render(ele, rootEl);
 
+
+
+
+
+
+
+
+
+/*@inject("store")
 @observer
 class TodoBox extends Component {
     constructor(props) {
@@ -44,69 +152,19 @@ class TodoBox extends Component {
         console.log('render')
         return (
             <div>
-                <p>{this.props.store.getHelo}</p>
-                <ul onClick={() => {this.props.store.setData()}}>{this.props.store.todos.map(todo => <li key={Math.random(1)}>{todo.title}</li>)}</ul>
+                <p>{store.getHelo}</p>
+                <ul onClick={() => {this.props.store.setData()}}>{this.props.store.todos.map(todo => <li key={Math.random(1)}>{this.props.todo.title}</li>)}</ul>
             </div>
         );
     }
-}
-
-class TestSelect extends Component{
-    handleChange(value) {
-        console.log(`selected ${value}`);
-    }
-    render() {
-        console.log('render')
-        return <Select value={1} defaultValue="lucy" style={{ width: 120 }} onChange={this.handleChange}>
-            <Option key={1} value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="disabled" disabled>Disabled</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-    </Select>
-    }
-}
-const store = new Store();
-
-function initOperationCheck() {
-    var moving = true;
-    var count = 0;
-    var timer = window.setInterval(function() {
-        if (moving) {
-            count = 0;
-            moving = false;
-        } else {
-            console.log(count);
-            if(++count > 20) {
-                window.clearInterval(timer);
-                logout();
-            }
-        }
-    },500);
-    window.addEventListener('mousemove', function() {
-        moving = true;
-    }, true);
-    function logout() {
-        sessionStorage.clear();
-        message.error('logout');
-        location.href = '/login.html';
-    }
-};
-initOperationCheck();
-// window.checkOperate = {
-//     lastTime: new Data().getTime(),
-//     minuteCount: 0, 
-// }
-// window.addEventListener('mousemove', function() {
-//     window.checkOperate.minuteCount = 0;
-// }, true);
-// window.setInterval(function() {
-//     window.checkOperate.minuteCount++;
-//     if(window.minuteCount)
-// }, 3000)
+}*/
 
 
 
 
-render((<TodoBox store={store}></TodoBox>) ,rootEl);
+
+
+
+// render((<TodoBox></TodoBox>) ,rootEl);
 
 // render(<TestSelect></TestSelect>, rootEl)

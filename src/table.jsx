@@ -5,9 +5,10 @@ import moment from 'moment';
 import { Alert, message, Select, Table, Checkbox, Input, Row, Col } from 'antd';
 import 'moment/locale/zh-cn';
 
-// import {observable, action, computed} from 'mobx';
+import {observable, action, computed, toJS} from 'mobx';
 import {observer, inject} from 'mobx-react';
 const InputGroup = Input.Group;
+window.toJS = toJS;
 @inject('store')
 @observer
 class SubTable extends Component {
@@ -99,6 +100,8 @@ class SubTable extends Component {
   render() {
     let data = this.props.store.tableData;
     let columns = this.tableData;
+    window.data = data;
+    console.dir(data);
     return (<div>
 
     <table>

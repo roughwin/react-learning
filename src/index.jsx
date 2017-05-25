@@ -163,7 +163,7 @@ class TodoBox extends Component {
 
 
 
-
+const regc = /^(\d{14}|\d{17})[\dx]$/i
 
 // render((<TodoBox></TodoBox>) ,rootEl);
 

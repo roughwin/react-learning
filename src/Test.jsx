@@ -19,4 +19,18 @@ class TestSelect extends Component{
     </Select>
     }
 }
+class NewTest extends Component {
+    constructor () {
+        console.log('helo');
+    }
+    render () {
+        const helo = 'myname';
+        return <div>{`Helo ${helo}`}
+            <Select value={1} defaultValue="helo" >
+                <Option key={1} value="check">Check</Option>
+            </Select>
+        </div>
+    }
+}
 
+export default NewTest;

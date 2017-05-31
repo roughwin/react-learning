@@ -6,8 +6,8 @@ import 'moment/locale/zh-cn';
 import {observable, action, computed} from 'mobx';
 import {observer, inject, Provider} from 'mobx-react';
 
-import MyTable from 'table'
-import store from 'stroe'
+import MyTable from './table';
+import store from './store';
 
 const Option = Select.Option;
 const rootEl = document.getElementById('root');

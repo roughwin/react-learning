@@ -5,7 +5,7 @@ class Store {
     @observable testLabelList = [];
     @observable testLabelAll = [];
     @observable helo = '123';
-
+    @observable selVal = 1;
     @observable tableData = [];
     constructor() {
         // console.log(this.helo);

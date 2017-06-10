@@ -6,9 +6,7 @@ import 'moment/locale/zh-cn';
 import {observable, action, computed, toJS} from 'mobx';
 import {observer, inject, Provider} from 'mobx-react';
 
-import MyTable from './table';
-import store from './store';
-import TestSelect from './subComponent';
+import 'test/GC_debug';
 
 const Option = Select.Option;
 const rootEl = document.getElementById('root');
@@ -16,20 +14,8 @@ const rootEl = document.getElementById('root');
 const check = <span><input type="checkbox"/>{'name'}</span>
 const count = 10
 
-console.log('helo')
-@observer
-class Ele extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return <Provider store={store}>
-      <div>
-        <div>{store.helo}</div>
-        <TestSelect value={store.helo}></TestSelect>
-      </div>
-    </Provider>
-  }
-}
+const ele = <div>
+  <h1>Hello</h1>
+</div>
 
-render(<Ele></Ele>, rootEl);
+render(ele, rootEl);

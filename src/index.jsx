@@ -6,16 +6,18 @@ import 'moment/locale/zh-cn';
 import {observable, action, computed, toJS} from 'mobx';
 import {observer, inject, Provider} from 'mobx-react';
 
-import 'test/GC_debug';
+// import 'test/GC_debug';
+import PhoneInput from 'components/common/phone_input';
 
 const Option = Select.Option;
 const rootEl = document.getElementById('root');
 
-const check = <span><input type="checkbox"/>{'name'}</span>
-const count = 10
+// const check = <span><input type="checkbox"/>{'name'}</span>
+// const count = 10
 
 const ele = <div>
-  <h1>Hello</h1>
+  hello
+  <PhoneInput></PhoneInput>
 </div>
 
 render(ele, rootEl);

@@ -18,7 +18,8 @@ const rootEl = document.getElementById('root');
 // const check = <span><input type="checkbox"/>{'name'}</span>
 // const count = 10
 
-var worker = new MyWorker();
+// var worker = new MyWorker();
+const worker = new MyWorker();
 worker.postMessage({a: 1});
 worker.onmessage = function(event) {
   console.log(event)

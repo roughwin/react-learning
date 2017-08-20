@@ -85,7 +85,7 @@ module.exports = {
       loader: 'url-loader',
     }, {
       test: /worker.js$/,
-      loader: 'worker-loader',
+      loader: 'shared-worker',
     }],
   },
   resolve: {

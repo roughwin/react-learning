@@ -83,6 +83,9 @@ module.exports = {
     }, {
       test: /\.(jpg|png)$/,
       loader: 'url-loader',
+    }, {
+      test: /worker.js$/,
+      loader: 'worker-loader',
     }],
   },
   resolve: {

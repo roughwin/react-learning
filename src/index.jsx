@@ -10,12 +10,22 @@ import {observer, inject, Provider} from 'mobx-react';
 import PhoneInput from 'components/common/phone_input';
 // import High from 'components/common/high';
 
+import MyWorker from "components/workers/worker.js";
+
 const Option = Select.Option;
 const rootEl = document.getElementById('root');
 
 // const check = <span><input type="checkbox"/>{'name'}</span>
 // const count = 10
 
+var worker = new MyWorker();
+worker.postMessage({a: 1});
+worker.onmessage = function(event) {
+  console.log(event)
+};
+worker.addEventListener("message", function(event) {
+  console.log(event);
+});
 
 console.log(PhoneInput)
 

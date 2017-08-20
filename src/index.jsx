@@ -8,12 +8,16 @@ import {observer, inject, Provider} from 'mobx-react';
 
 // import 'test/GC_debug';
 import PhoneInput from 'components/common/phone_input';
+// import High from 'components/common/high';
 
 const Option = Select.Option;
 const rootEl = document.getElementById('root');
 
 // const check = <span><input type="checkbox"/>{'name'}</span>
 // const count = 10
+
+
+console.log(PhoneInput)
 
 const ele = <div>
   hello

@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Input, Select } from 'antd';
 import _ from 'lodash';
+import High from './high';
 
 // import './phone_input.less';
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
 
+@High
 class PhoneInput extends Component {
   render() {
     return <InputGroup compact>

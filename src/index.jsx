@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { render } from 'react-dom';
 import moment from 'moment';
 import { Alert, message, Select, Table, Icon, Row, Col } from 'antd';
@@ -8,6 +9,7 @@ import {observer, inject, Provider} from 'mobx-react';
 
 // import 'test/GC_debug';
 import PhoneInput from 'components/common/phone_input';
+import MyTable from 'components/common/table';
 // import High from 'components/common/high';
 
 import MyWorker from "components/workers/worker.js";
@@ -19,20 +21,24 @@ const rootEl = document.getElementById('root');
 // const count = 10
 
 // var worker = new MyWorker();
-const worker = new MyWorker();
-worker.postMessage({a: 1});
-worker.onmessage = function(event) {
-  console.log(event)
-};
-worker.addEventListener("message", function(event) {
-  console.log(event);
-});
+// const worker = new MyWorker();
+// worker.postMessage({a: 1});
+// worker.onmessage = function(event) {
+//   console.log(event)
+// };
+// worker.addEventListener("message", function(event) {
+//   console.log(event);
+// });
 
 console.log(PhoneInput)
 
 const ele = <div>
   hello
+  <Router>
+    <Route path="tab" component={PhoneInput} />
+  </Router>
   <PhoneInput></PhoneInput>
 </div>
 
 render(ele, rootEl);
+

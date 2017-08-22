@@ -6,8 +6,9 @@ const TabPane = Tabs.TabPane
 
 // import PhoneInput from './phone_input';
 
-function High(Target) {
+const High = (Adds) => (Target) => {
   console.log('high', Target)
+  console.log('Adds', Adds)
   return class extends Component {
     constructor(props) {
       super(props);
@@ -42,20 +43,20 @@ function High(Target) {
         onEdit={this.onEdit}
         hideAdd
       >
-          <TabPane
-            tab={"tab"}
-            key={'first'}
-            closable
-          >
-            <Target {...this.props}/>
-          </TabPane>
-          <TabPane
-            tab="tab2"
-            key="22"
-            closable
-          >
-            helo
-          </TabPane>
+        <TabPane
+          tab={"tab"}
+          key={'first'}
+          closable
+        >
+          <Target {...this.props}/>
+        </TabPane>
+        <TabPane
+          tab="tab2"
+          key='22'
+          closable
+        >
+          {Adds}
+         </TabPane>
         </Tabs>;
     }
   }

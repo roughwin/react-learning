@@ -8,7 +8,7 @@ import High from './high';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 
-@High(null)
+@High
 class PhoneInput extends Component {
   render() {
     return <InputGroup compact>

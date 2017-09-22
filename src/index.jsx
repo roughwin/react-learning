@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { render } from 'react-dom';
 import moment from 'moment';
-import { Alert, message, Select, Table, Icon, Row, Col } from 'antd';
+import { Alert, message, Select, Table, Icon, Row, Col, Input } from 'antd';
 import 'moment/locale/zh-cn';
 import {observable, action, computed, toJS} from 'mobx';
 import {observer, inject, Provider} from 'mobx-react';
@@ -10,7 +10,7 @@ import {observer, inject, Provider} from 'mobx-react';
 // import 'test/GC_debug';
 import PhoneInput from 'components/common/phone_input';
 import MyTable from 'components/common/table';
-// import High from 'components/common/high';
+import High from 'components/common/high';
 
 import MyWorker from "components/workers/worker.js";
 
@@ -31,14 +31,17 @@ const rootEl = document.getElementById('root');
 // });
 
 console.log(PhoneInput)
-
+// const Elee = High(<Input />)(PhoneInput);
 const ele = <div>
   hello
-  <Router>
-    <Route path="tab" component={PhoneInput} />
-  </Router>
   <PhoneInput></PhoneInput>
 </div>
 
+  // <Router>
+  //   <Route path="/tab" render={() => {
+  //       const Ele = High(PhoneInput)
+  //       return <Ele />
+  //     }} />
+  // </Router>
 render(ele, rootEl);
 

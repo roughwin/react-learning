@@ -6,14 +6,14 @@ const TabPane = Tabs.TabPane
 
 // import PhoneInput from './phone_input';
 
-const High = (Adds) => (Target) => {
+const High = (Target) => {
   console.log('high', Target)
-  console.log('Adds', Adds)
   return class extends Component {
     constructor(props) {
       super(props);
       this.state = {
         activeKey: 'first',
+        tabs: [],
       }
     }
     onChange = (e) => {
@@ -22,16 +22,16 @@ const High = (Adds) => (Target) => {
         activeKey: e,
       })
     }
-    add = () => {
-
+    add = (e) => {
+      console.log('add')
     }
-    remove = () => {
-
+    remove = (e) => {
+      this.props.removeTab();
+      console.log(e);
     } 
     onEdit = (targetKey, action) => {
       console.log('onEdit');
       console.log(targetKey, action);
-
       // console.log(this[e])
     }
     
@@ -52,12 +52,14 @@ const High = (Adds) => (Target) => {
         </TabPane>
         <TabPane
           tab="tab2"
-          key='22'
+          key="22"
           closable
         >
-          {Adds}
-         </TabPane>
-        </Tabs>;
+
+        </TabPane>
+        
+        { this.state.tabs.map((ele) => (<TabPane>ele</TabPane>)) }  
+      </Tabs>; 
     }
   }
 }

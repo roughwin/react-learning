@@ -8,9 +8,9 @@ import High from './high';
 const InputGroup = Input.Group;
 const Option = Select.Option;
 
-@High
 class PhoneInput extends Component {
   render() {
+    console.log(_)
     return <InputGroup compact>
       <Select
         defaultValue="helo"

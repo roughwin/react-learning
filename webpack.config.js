@@ -42,6 +42,10 @@ let plugins = [
     filename: 'bundle.css',
     allChunks: true,
   }),
+  new webpack.DllReferencePlugin({
+    context: '.',
+    manifest: require('./dll/dll-manifest.json')
+  }),
   // new BitBarWebpackProgressPlugin(),
 //   new HtmlWebpackPlugin({
 //     domain: config.api.crm || '',

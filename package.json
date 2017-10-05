@@ -8,12 +8,13 @@
     "url": "git@code.smartstudy.com:o2o/crm-frontend.git"
   },
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --progress --hot",
+    "start": "npm run dllbuild && NODE_ENV=development webpack-dev-server --progress --hot",
     "build": "COMMIT_ID=$(git log --oneline | head -n 1 | sed 's/ .*//') NODE_ENV=production webpack --config webpack.config.prod.js --progress -p --bail",
     "testbuild": "npm run prebuild && BUILD_TIME=$(date +%s) COMMIT_ID=$(git log --oneline | head -n 1 | sed 's/ .*//') NODE_ENV=testing webpack --config webpack.config.prod.js --progress -p --bail",
     "clean": "rimraf public dist",
     "prebuild": "mkdir -p dist && cp -R src/assets/** dist",
     "copy": "mkdir -p public && cp -R src/assets/** public",
+    "dllbuild": "webpack --config dll.webpack.config.js",
     "prestart": "npm run clean && npm run copy",
     "lint": "eslint --ext .js,.jsx",
     "lint:git": "eslint `git diff-index --name-only HEAD | grep -e '.js$' -e '.jsx$'`",

@@ -1,27 +1,11 @@
 // vendor-bundles.webpack.config.js
 var webpack = require('webpack')
 var path = require('path')
+var dependencies = require('./package.json').dependencies || []
 
 module.exports = {
   entry: {
-    'dll': [
-      "antd",
-      "lodash",
-      "mobx",
-      "mobx-react",
-      "mobx-utils",
-      "moment",
-      "phone",
-      "prop-types",
-      "qrcode.react",
-      "qs",
-      'react',
-      'react-dom',
-      'react-dnd',
-      'react-dnd-html5-backend',
-      'react-loading',
-      'react-router-dom',
-      'whatwg-fetch'],
+    'dll': Object.keys(dependencies)
   },
 
   output: {

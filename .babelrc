@@ -1,5 +1,15 @@
 {
-  "presets": ["react","es2015","stage-0"],
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        "targets": {
+          "chrome": 48
+        }
+      }
+    ]
+  ],
   "plugins": [
     ["import", { "libraryName": "antd", "style": true }],
     "transform-decorators-legacy",

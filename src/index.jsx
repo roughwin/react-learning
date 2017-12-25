@@ -6,7 +6,6 @@ import { Alert, message, Select, Table, Icon, Row, Col, Input } from 'antd';
 import 'moment/locale/zh-cn';
 
 
-
 const Option = Select.Option;
 const rootEl = document.getElementById('root');
 

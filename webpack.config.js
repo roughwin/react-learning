@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 // const config = require('./config.js');
 const config = null;
 // const BitBarWebpackProgressPlugin = require("bitbar-webpack-progress-plugin");
@@ -42,6 +43,12 @@ let plugins = [
     filename: 'bundle.css',
     allChunks: true,
   }),
+  new webpack.DllReferencePlugin({
+    context: '.',
+    manifest: require('./dll/dll-manifest.json')
+  }),
+  new HardSourceWebpackPlugin(),
+  
   // new BitBarWebpackProgressPlugin(),
 //   new HtmlWebpackPlugin({
 //     domain: config.api.crm || '',

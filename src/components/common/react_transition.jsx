@@ -50,6 +50,7 @@ class TransitionEx extends Component {
   render() {
     return <div>
       <Button
+        type="primary"
         onClick={() => {
           this.setState({
             show: !this.state.show,

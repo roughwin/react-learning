@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import Transition from 'react-transition-group/Transition'
 import { Button } from 'antd'
 
-const duration = 300
+const duration = 150
 
 const defaultStyle = {
-  transition: `opacity ${duration}ms ease-in-out`,
+  transition: `${duration}ms ease-in-out`,
+  // transform: 'translateX(100px)',
   opacity: 0,
 }
 
 const transitionStyles = {
-  entering: { opacity: 0 },
-  entered: { opacity: 1 },
+  entering: { transform: 'translateX(100px)', opacity: 0 },
+  entered: { transform: 'translateX(0px)', opacity: 1 },
+  exiting: { transform: 'translateX(0px)', opacity: 1},
+  exited: { transform: 'translateX(100px)', opacity: 0},
 }
 
 const Fade = ({ in: inProp }) => (
@@ -36,8 +39,13 @@ class TransitionEx extends Component {
   constructor() {
     super();
     this.state = {
-      show: true,
+      show: false,
     }
+    setInterval(() => {
+      this.setState({
+        show: !this.state.show,
+      })
+    }, 1000)
   }
   render() {
     return <div>

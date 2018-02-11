@@ -5,6 +5,7 @@ import moment from 'moment';
 import Rx from 'rxjs/Rx';
 import { Alert, message, Select, Table, Icon, Row, Col, Input } from 'antd';
 import 'moment/locale/zh-cn';
+import Routes from 'components/common/routes'
 
 
 const Option = Select.Option;
@@ -66,6 +67,15 @@ const ele = <div>
     columns={columns}
     dataSource={data}
   />
+  <Router>
+    <Route path="/">
+      <div>
+        <div>hello route</div>
+        <Link to="/test/react-transition-group">1234</Link>
+        <Routes />
+      </div>
+    </Route>
+  </Router>
 </div>
 const ele1 = <div>
   <input type="text"/>

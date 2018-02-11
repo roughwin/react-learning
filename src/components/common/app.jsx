@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { Alert, message, Select, Table, Icon, Row, Col, Input } from 'antd';
 import 'moment/locale/zh-cn';
 import PhoneInput from 'components/common/phone_input';
+import Routes from 'components/common/routes';
 
 class Test extends Component {
   constructor() {
@@ -17,6 +18,10 @@ class Test extends Component {
       hello
       <PhoneInput></PhoneInput>
       <Input></Input>
+      <Router>
+        <div>hl</div>
+        <Routes />
+      </Router>
     </div>);
   }
 }

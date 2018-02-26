@@ -79,7 +79,7 @@ export const CssTransitionHOC = DefaultComponent => class extends Component {
 }
 
 @CssTransitionHOC
-class Node extends Component {
+class AAA extends Component {
   render() {
     return <div>{
       this.props.children
@@ -128,8 +128,8 @@ class TransitionEx extends Component {
         onClick={() => {
           const list = this.state.fadeList || [];
           const t = window.performance.now();
-          const newNode = <Node key={t}>{t}</Node>
-          list.push(newNode)
+          const aaa = <AAA key={t}>{t}</AAA>
+          list.push(aaa)
           this.setState({
             fadeList: list,
           })

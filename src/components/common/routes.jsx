@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
-
-import TransitionEx from 'components/common/react_transition'
+import TransitionEx, { CssTransitionHOC } from 'components/common/react_transition'
 
 export default class Routes extends Component {
   render() {

@@ -6,6 +6,10 @@ import Rx from 'rxjs/Rx';
 import { Alert, message, Select, Table, Icon, Row, Col, Input } from 'antd';
 import 'moment/locale/zh-cn';
 import Routes from 'components/common/routes'
+import A from 'components/common/decoractor'
+
+
+const x = new A()
 
 
 const Option = Select.Option;

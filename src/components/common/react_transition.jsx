@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Transition from 'react-transition-group/Transition'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Route, Switch } from 'react-router-dom'
+
 import { Button } from 'antd'
 
 const duration = 150
@@ -58,7 +60,11 @@ export const CssTransitionHOC = DefaultComponent => class extends Component {
   // constructor() {
   //   super();
   // }
+  componentWillMount() {
+    console.log('component will unmount')
+  }
   render() {
+    // console.log(this.props)
     return <CSSTransition
       {...this.props}
       timeout={1000}
@@ -88,17 +94,23 @@ class AAA extends Component {
 }
 
 class TransitionEx extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       show: true,
     }
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
         show: !this.state.show,
       })
     }, 1000)
   }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+    console.log('TransitionEx component will unmount')
+  }
+
   render() {
     return <div>
       <Button
@@ -165,7 +177,5 @@ class TransitionEx extends Component {
     </div>
   }
 }
-
-
 
 export default TransitionEx;

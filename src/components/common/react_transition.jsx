@@ -60,11 +60,7 @@ export const CssTransitionHOC = DefaultComponent => class extends Component {
   // constructor() {
   //   super();
   // }
-  componentWillMount() {
-    console.log('component will unmount')
-  }
   render() {
-    // console.log(this.props)
     return <CSSTransition
       {...this.props}
       timeout={1000}

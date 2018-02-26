@@ -9,32 +9,35 @@ const RouteWithTransition = CssTransitionHOC(Route);
 @withRouter
 export default class Routes extends Component {
   render() {
-    console.log('location in render', this.props.location)
     return <TransitionGroup>
       <CSSTransition
         timeout={{
           enter: 800,
-          exit: 0,
+          exit: 200,
          }}
-        // classNames="fade"
         key={this.props.location.pathname}
         classNames={{
-          // appear: 'my-appear',
-          // appearActive: '',
-          enter: 'fadeIn',
+          enter: 'fadeInRight',
           enterActive: 'animated',
-          // exit: 'fadeOutLeft',
-          // exitActive: 'animated',
+          exit: 'fadeOutLeft',
+          exitActive: 'animated',
         }}
       >
-        <Switch
-          location={this.props.location}
+        <div
+          style={{
+            position: 'absolute',
+            top: 100,
+          }}
         >
-          <Route path="/test/route2" render={() => {
-            return <div>route2</div>
-          }}/>
-          <Route path="/test/react-transition-group" component={TransitionEx} />
-        </Switch>
+          <Switch
+            location={this.props.location}
+          >
+            <Route path="/test/route2" render={() => {
+              return <div>route2</div>
+            }}/>
+            <Route path="/test/react-transition-group" component={TransitionEx} />
+          </Switch>
+        </div>
       </CSSTransition>
       {/* <RouteWithTransition>
         <Route path="/test/react-transition-group" component={TransitionEx} />

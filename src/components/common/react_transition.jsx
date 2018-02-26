@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Transition from 'react-transition-group/Transition'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Route, Switch } from 'react-router-dom'
+
 import { Button } from 'antd'
 
 const duration = 150
@@ -79,7 +81,7 @@ export const CssTransitionHOC = DefaultComponent => class extends Component {
 }
 
 @CssTransitionHOC
-class Node extends Component {
+class AAA extends Component {
   render() {
     return <div>{
       this.props.children
@@ -88,17 +90,22 @@ class Node extends Component {
 }
 
 class TransitionEx extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       show: true,
     }
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
         show: !this.state.show,
       })
     }, 1000)
   }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
   render() {
     return <div>
       <Button
@@ -128,8 +135,8 @@ class TransitionEx extends Component {
         onClick={() => {
           const list = this.state.fadeList || [];
           const t = window.performance.now();
-          const newNode = <Node key={t}>{t}</Node>
-          list.push(newNode)
+          const aaa = <AAA key={t}>{t}</AAA>
+          list.push(aaa)
           this.setState({
             fadeList: list,
           })
@@ -148,6 +155,15 @@ class TransitionEx extends Component {
       >
         POP
       </Button>
+      <Button
+        onClick={() => {
+          this.setState({
+            fadeList: [],
+          })
+        }}
+      >
+        CLEAR
+      </Button>
       <TransitionGroup>
         {
           this.state.fadeList
@@ -156,7 +172,5 @@ class TransitionEx extends Component {
     </div>
   }
 }
-
-
 
 export default TransitionEx;

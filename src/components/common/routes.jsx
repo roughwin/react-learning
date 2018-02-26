@@ -9,7 +9,11 @@ const RouteWithTransition = CssTransitionHOC(Route);
 @withRouter
 export default class Routes extends Component {
   render() {
-    return <TransitionGroup>
+    return <TransitionGroup
+      style={{
+        position: 'relative'
+      }}
+    >
       <CSSTransition
         timeout={{
           enter: 800,
@@ -26,7 +30,6 @@ export default class Routes extends Component {
         <div
           style={{
             position: 'absolute',
-            top: 100,
           }}
         >
           <Switch

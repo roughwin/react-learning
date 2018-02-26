@@ -28,7 +28,12 @@ const ele = <div>
           }}
           to="/"
         >HOME</Link>
-        <Link to="/test/route2">route2</Link>
+        <Link
+          style={{
+            margin: '3rem'
+          }}
+          to="/test/route2"
+        >route2</Link>
         <Link to="/test/react-transition-group">TEST transition</Link>
         <div
           style={{

@@ -104,7 +104,6 @@ class TransitionEx extends Component {
 
   componentWillUnmount() {
     clearInterval(this.interval)
-    console.log('TransitionEx component will unmount')
   }
 
   render() {

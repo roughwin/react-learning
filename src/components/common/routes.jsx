@@ -42,9 +42,6 @@ export default class Routes extends Component {
           </Switch>
         </div>
       </CSSTransition>
-      {/* <RouteWithTransition>
-        <Route path="/test/react-transition-group" component={TransitionEx} />
-      </RouteWithTransition> */}
     </TransitionGroup>
   }
 }

@@ -148,6 +148,15 @@ class TransitionEx extends Component {
       >
         POP
       </Button>
+      <Button
+        onClick={() => {
+          this.setState({
+            fadeList: [],
+          })
+        }}
+      >
+        CLEAR
+      </Button>
       <TransitionGroup>
         {
           this.state.fadeList

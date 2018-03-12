@@ -25,6 +25,7 @@
   ],
   "dependencies": {
     "antd": "^2.9.0",
+    "gpu.js": "^1.2.0",
     "lodash": "^4.17.4",
     "mobx": "^3.1.7",
     "mobx-react": "^4.1.3",

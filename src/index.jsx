@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { render } from 'react-dom';
+import GPU from 'gpu.js';
 import moment from 'moment';
 import Rx from 'rxjs/Rx';
 import { Alert, message, Select, Table, Icon, Row, Col, Input } from 'antd';
@@ -69,5 +70,19 @@ observable.subscribe({
   complete: () => console.log('done'),
 });
 console.log('just after subscribe');
+
+const gpu = new GPU();
+const matMult = gpu.createKernel(function(a, b) {
+  var sum = 0;
+  for (var i = 0; i < 512; i++) {
+      sum += a[this.thread.y][i] * b[i][this.thread.x];
+  }
+  return sum;
+}).setOutput([512, 512]);
+
+// Perform matrix multiplication on 2 matrices of size 512 x 512
+const c = matMult([1,0,0], [0,1,0]);
+console.log(c)
+
 render(ele, rootEl);
 

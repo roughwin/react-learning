@@ -9,7 +9,7 @@ export default class WebGl extends Component {
       ' gl_PointSize = 9.0;\n' + '}\n';
     var FSHADER_SOURCE =
       'void main() {\n' +
-      ' gl_FragColor = vec4(0.1, 0.5, 0.5, 1.0);\n' + // Set the color
+      ' gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' + // Set the color
       '}\n';
     initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)
     gl.clearColor(0.0, 0.0, 0.0, 1.0);

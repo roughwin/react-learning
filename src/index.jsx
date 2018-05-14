@@ -3,12 +3,15 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { render } from 'react-dom';
 import GPU from 'gpu.js';
 import moment from 'moment';
+import * as Three from 'three'
 import Rx from 'rxjs/Rx';
-import { Alert, message, Select, Table, Icon, Row, Col, Input } from 'antd';
+import { Alert, message, Select, Table, Icon, Row, Col, Input, Button } from 'antd';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import 'moment/locale/zh-cn';
 import Routes from 'components/common/routes'
 import A from 'components/common/decoractor'
+
+import Driver from 'driver.js'
 
 
 const x = new A()
@@ -23,6 +26,14 @@ const ele = <div>
     <Route path="/">
       <div>
         <div>hello route</div>
+        <Button
+        onClick={() => {
+          import("phone").then(phone => {
+            window.phone = phone
+            console.log(phone)
+          })
+        }}
+      >dfdsf</Button>
         <Link
           style={{
             margin: '3rem'
@@ -83,6 +94,71 @@ const matMult = gpu.createKernel(function(a, b) {
 // Perform matrix multiplication on 2 matrices of size 512 x 512
 const c = matMult([1,0,0], [0,1,0]);
 console.log(c)
+
+
+// const scene = new Three.Scene()
+// const camera = new Three.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+// const render0 = new Three.WebGLRenderer()
+// render0.setSize(window.innerWidth / 2, window.innerHeight / 2)
+// document.body.appendChild(render0.domElement)
+
+// camera.position.set(0, 0, 100)
+// camera.lookAt(new Three.Vector3(0, 0, 0))
+
+
+// const material = new Three.LineBasicMaterial({ color: 0x00ff00 })
+// const geometry = new Three.Geometry();
+// geometry.vertices.push(new Three.Vector3(-10, 0, 0))
+// geometry.vertices.push(new Three.Vector3(0, 10, 0))
+// geometry.vertices.push(new Three.Vector3(10, 0, 0))
+// const line = new Three.Line(geometry, material)
+// scene.add(line)
+// render0.render(scene, camera)
+// // camera.position.z = 5
+// // function animate() {
+// //   requestAnimationFrame( animate );
+// //   cube.rotation.x += 0.01;
+// //   cube.rotation.y += 0.01;
+// // 	render0.render( scene, camera );
+// // }
+// // animate();
+// // const driver = new Driver()
+const text = document.createElement('div')
+text.style.position = 'fixed'
+text.style.bottom = '0px'
+document.body.appendChild(text)
+const dddd = document.createElement('div')
+dddd.innerText = '.'
+dddd.style.backgroundColor = 'red'
+dddd.style.position = 'fixed'
+dddd.style.opacity = '0.5'
+dddd.id = 'hllaa'
+document.body.appendChild(dddd)
+let old = '';
+window.addEventListener('mouseover', (e) => {
+  // if (e.target.id === dddd.id) {
+  //   dddd.style.height = 0
+  //   dddd.style.width = 1
+  //   return
+  // }
+  const r = e.target.getBoundingClientRect();
+  console.log(r, e.target)
+  text.innerText = JSON.stringify(r)
+  dddd.style.top = `${r.top}px`// r.top;
+  dddd.style.left = `${r.left}px`//r.left;
+  // dddd.style.width = `${r.right - r.left}px`
+  // dddd.style.height = `${r.bottom - r.top}px`
+  // old = e.target.style.backgroundColor
+  // e.target.style.backgroundColor = '#55aaff'
+}, true);
+// window.addEventListener('mouseout', (e) => {
+//   console.log(e.target)
+//   e.target.style.backgroundColor = old
+// }, true)
+// window.addEventListener('click', (e) => {
+//   console.log(e.target.path)
+//   e.stopImmediatePropagation();
+// }, true)
 
 render(ele, rootEl);
 

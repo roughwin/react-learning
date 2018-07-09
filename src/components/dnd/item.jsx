@@ -5,20 +5,13 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 const cardSource = {
   beginDrag(props) {
-    console.log(props);
     return {
       id: props.id,
-      originalIndex: props.findCard(props.id).index,
+      index: props.index,
     };
   },
 
   endDrag(props, monitor) {
-    const { id: droppedId, originalIndex } = monitor.getItem();
-    const didDrop = monitor.didDrop();
-
-    if (!didDrop) {
-      props.moveCard(droppedId, originalIndex);
-    }
   },
 };
 
@@ -29,30 +22,37 @@ const cardTarget = {
 
   hover(props, monitor) {
     const { id: draggedId } = monitor.getItem();
-    const { id: overId } = props;
-    if (overId === this.lastOverId && draggedId === this.lastDraggedId) return;
-    this.lastDraggedId = draggedId;
+    const { index: overIndex, id: overId } = props;
+    if (overId === this.lastOverId && draggedId === this.lastdraggedId) return;
+    this.lastdraggedId = draggedId;
     this.lastOverId = overId;
-    // if (draggedId !== overId) {
-    //   const { index: overIndex } = props.findCard(overId);
-    //   props.moveCard(draggedId, overIndex);
-    // }
+    if (draggedId !== overId) {
+      props.moveCard(overIndex, draggedId);
+    }
   },
 };
 
-// @DropTarget('DndGrid', cardTarget, connect => ({
-//   connectDropTarget: connect.dropTarget(),
-// }))
+@DropTarget('DndGrid', cardTarget, connect => ({
+  connectDropTarget: connect.dropTarget(),
+}))
 @DragSource('DndGrid', cardSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 }))
 export default class DndItem extends Component {
   render() {
+    const colors = ['red', 'yellow', 'green'];
     const { connectDropTarget, connectDragSource, isDragging } = this.props;
-    console.log(isDragging)
-    return connectDragSource(<div>
-      You Can Drop Here.
-    </div>)
+    return  connectDropTarget(connectDragSource(<div
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        width: '100',
+        height: '100',
+        margin: '1em',
+        backgroundColor: colors[this.props.id - 1]
+      }}
+    >
+      {this.props.id}
+    </div>))
   }
 }

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-// import {} from 'antd';
 import { DragSource, DropTarget, DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { height } from 'window-size';
+import { relative } from 'path';
 
 const cardSource = {
   beginDrag(props) {
@@ -39,20 +40,48 @@ const cardTarget = {
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 }))
-export default class DndItem extends Component {
+export default class DnDItem extends Component {
+  state = {
+    dragable: false,
+  }
   render() {
-    const colors = ['red', 'yellow', 'green'];
     const { connectDropTarget, connectDragSource, isDragging } = this.props;
-    return  connectDropTarget(connectDragSource(<div
+    const dropTarget = connectDropTarget(<div
       style={{
         opacity: isDragging ? 0.5 : 1,
-        width: '100',
-        height: '100',
-        margin: '1em',
-        backgroundColor: colors[this.props.id - 1]
+        position: 'relative',
       }}
     >
-      {this.props.id}
-    </div>))
+      {this.props.children}
+      <div
+        onMouseOver={() => {
+          this.setState({
+            dragable: true,
+          })
+        }}
+        onMouseLeave={() => {
+          this.setState({
+            dragable: false,
+          })
+        }}
+        style={{
+          position: 'absolute',
+          right: '50%',
+          top: '50%',
+          transform: 'translate(50%, -50%)',
+          height: '2em',
+          width: '2em',
+          zIndex: 999,
+          cursor: this.state.dragable ? 'move' : 'none',
+          backgroundColor: 'black'
+        }}
+      >
+        
+      </div>
+    </div>)
+    if (!this.state.dragable) return dropTarget;
+    return connectDragSource(dropTarget);
   }
 }
+
+export { DnDItem }

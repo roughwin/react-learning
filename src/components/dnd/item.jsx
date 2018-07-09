@@ -3,6 +3,7 @@ import { DragSource, DropTarget, DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { height } from 'window-size';
 import { relative } from 'path';
+import { InputNumber } from 'antd';
 
 const cardSource = {
   beginDrag(props) {
@@ -50,34 +51,51 @@ export default class DnDItem extends Component {
       style={{
         opacity: isDragging ? 0.5 : 1,
         position: 'relative',
+        cursor: this.state.dragable ? 'move' : 'default',
+      }}
+      onMouseEnter={() => {
+        this.setState({ focus: true, dragable: true });
+      }}
+      onMouseLeave={() => {
+        this.setState({ focus: false, dragable: false });
       }}
     >
-      {this.props.children}
       <div
-        onMouseOver={() => {
-          this.setState({
-            dragable: true,
-          })
-        }}
-        onMouseLeave={() => {
-          this.setState({
-            dragable: false,
-          })
-        }}
         style={{
-          position: 'absolute',
-          right: '50%',
-          top: '50%',
-          transform: 'translate(50%, -50%)',
-          height: '2em',
-          width: '2em',
-          zIndex: 999,
-          cursor: this.state.dragable ? 'move' : 'none',
-          backgroundColor: 'black'
+          filter: this.state.focus ? 'blur(2px)' : 'none'
         }}
       >
-        
+        {this.props.children}
       </div>
+      {
+        this.state.focus &&
+        <InputNumber
+          size="small"
+          min={0}
+          max={24}
+          precision={0}
+          value={this.props.col}
+          onChange={this.props.onChange}
+          onMouseOver={() => {
+            this.setState({
+              dragable: false,
+            })
+          }}
+          onMouseLeave={() => {
+            this.setState({
+              dragable: true,
+            })
+          }}
+          style={{
+            position: 'absolute',
+            right: '50%',
+            top: '50%',
+            transform: 'translate(50%, -50%)',
+            width: '4em',
+            zIndex: 999,
+          }}
+        />
+      }
     </div>)
     if (!this.state.dragable) return dropTarget;
     return connectDragSource(dropTarget);

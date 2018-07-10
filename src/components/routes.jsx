@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import TransitionEx, { CssTransitionHOC } from 'components/common/react_transition'
-
+import DndTest from 'components/dnd';
 
 @withRouter
 class TransitionRoutes extends Component {
@@ -51,6 +51,9 @@ export default class Routes extends Component {
         return <div>route2</div>
       }} />
       <Route path="/test/react-transition-group" component={TransitionEx} />
+      <Route path="/test/dnd-test" component={DndTest} />
+      
+      {/* <Route path="/webgl" component={WebGl} /> */}
     </TransitionRoutes>
 
   }

@@ -7,6 +7,7 @@ import { InputNumber } from 'antd';
 
 const cardSource = {
   beginDrag(props) {
+    props.onDragChange(true);
     return {
       id: props.id,
       index: props.index,
@@ -14,6 +15,7 @@ const cardSource = {
   },
 
   endDrag(props, monitor) {
+    props.onDragChange(false);
   },
 };
 
@@ -46,7 +48,7 @@ export default class DnDItem extends Component {
     dragable: false,
   }
   render() {
-    const { connectDropTarget, connectDragSource, isDragging } = this.props;
+    const { connectDropTarget, connectDragSource, isDragging, isOtherDragging } = this.props;
     const dropTarget = connectDropTarget(<div
       style={{
         opacity: isDragging ? 0.5 : 1,
@@ -54,6 +56,7 @@ export default class DnDItem extends Component {
         cursor: this.state.dragable ? 'move' : 'default',
       }}
       onMouseEnter={() => {
+        if (isOtherDragging) return;
         this.setState({ focus: true, dragable: true });
       }}
       onMouseLeave={() => {

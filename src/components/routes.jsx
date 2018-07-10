@@ -29,6 +29,7 @@ class TransitionRoutes extends Component {
         <div
           style={{
             position: 'absolute',
+            width: '100%'
           }}
         >
           <Switch

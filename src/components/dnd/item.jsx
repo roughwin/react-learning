@@ -71,14 +71,16 @@ export default class DnDItem extends Component {
         {this.props.children}
       </div>
       {
-        this.state.focus &&
+        (this.state.focus || this.state.inputFocus) &&
         <InputNumber
           size="small"
-          min={0}
+          min={1}
           max={24}
           precision={0}
           value={this.props.col}
           onChange={this.props.onChange}
+          onFocus={() => this.setState({ inputFocus: true })}
+          onBlur={() => this.setState({ inputFocus: false })}
           onMouseOver={() => {
             this.setState({
               dragable: false,

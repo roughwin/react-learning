@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { Form, Col, Row } from 'antd';
 import DndContainer from './container';
 
-
+const FormItem = Form.Item;
 const colors = ['red', 'yellow', 'green', 'azure', 'orchid', 'gray'];
 export default class DndTest extends Component {
   state = {
@@ -11,22 +12,23 @@ export default class DndTest extends Component {
       id,
       key: id,
       col: 8,
-      ele: <div
-        style={{
-          backgroundColor: colors[id - 1],
-          width: '8em',
-          height: '4em',
-          margin: '0.5em 0'
-        }}
+      ele: <FormItem
+        label="test"
+        labelCol={{ span: 12 }}
+        wrapperCol={{ span: 12 }}
       >
         {id}
-      </div>
+      </FormItem>
     })),
   }
   render() {
-    return <DndContainer
-      items={this.state.items}
-      onChange={(items) => this.setState({ items })}
-    />
+    return <Form layout="horizontal" style={{ width: '100%', position: 'absolute' }}>
+    <Row>
+      <DndContainer
+        items={this.state.items}
+        onChange={(items) => this.setState({ items })}
+      />
+    </Row>
+    </Form>
   }
 }

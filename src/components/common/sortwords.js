@@ -66,7 +66,7 @@ function getPos(line, char, startPos) {
       const str = word[b];
       for (; c < str.length; c++) {
         const strarr = str.split('');
-        if (strarr[c] === char) {
+        if (strarr[c].toUpperCase() === char.toUpperCase()) {
           return [a, b, c];
         }
       }
@@ -79,7 +79,6 @@ function filter(arr, str) {
   return arr.map(l => {
     const { pinyin, line, originIndex } = l;
     const r = rank(pinyin, str);
-    console.log(r, line, str, pinyin)
     return ([r, line]);
   }).filter(a => a[0]);
 }

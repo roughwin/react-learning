@@ -13,7 +13,8 @@ Object.keys(word).forEach(k => {
 
 function genPinyin(s) {
   const r = [];
-  s.split('').forEach(c => {
+  const sarr = s.split('')
+  sarr.forEach(c => {
     const x = map[c];
     if (x) {
       r.push(x)
@@ -21,18 +22,10 @@ function genPinyin(s) {
       r.push([c])
     }
   });
-  return r;
+  return r.concat(sarr);
 }
 
-const testWords = [
-  '小孙子',
-  '测试',
-  'example'
-].map((c, originIndex) => ({
-  pinyin: genPinyin(c),
-  originIndex,
-  line: c,
-}))
+
 
 function trans(arrs) {
   return arrs.map((c, originIndex) => ({
@@ -74,7 +67,8 @@ function getPos(line, char, startPos) {
   }
 }
 
-function filter(arr, str) {
+function filter(arr, testStr) {
+  const str = testStr.trim();
   if (!str) return arr.map(a => ([1, a.line]))
   return arr.map(l => {
     const { pinyin, line, originIndex } = l;

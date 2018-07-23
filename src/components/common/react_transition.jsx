@@ -3,8 +3,8 @@ import Transition from 'react-transition-group/Transition'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Route, Switch } from 'react-router-dom'
 
-import { Button } from 'antd'
-
+import { Button, Input } from 'antd'
+import { filter as sortWords, trans, rank } from './sortwords';
 const duration = 150
 
 const defaultStyle = {
@@ -80,6 +80,7 @@ export const CssTransitionHOC = DefaultComponent => class extends Component {
   }
 }
 
+
 @CssTransitionHOC
 class AAA extends Component {
   render() {
@@ -95,11 +96,24 @@ class TransitionEx extends Component {
     this.state = {
       show: true,
     }
-    this.interval = setInterval(() => {
-      this.setState({
-        show: !this.state.show,
-      })
-    }, 1000)
+    // this.interval = setInterval(() => {
+    //   this.setState({
+    //     show: !this.state.show,
+    //   })
+    // }, 1000)
+    this.arr = trans([
+      '博纳单',
+      '和范德萨发',
+      '好佛阿斯顿发',
+      '菲兹',
+      '房贷首付但是',
+      '洞察力',
+      '卡路里扣扣里',
+      '测试',
+      'example'
+    ]);
+    window.rank = rank;
+    console.log(this.arr)
   }
 
   componentWillUnmount() {
@@ -108,6 +122,17 @@ class TransitionEx extends Component {
 
   render() {
     return <div>
+      <Input
+        onChange={(e) => {
+          const inputValue = e ? e.target.value : '';
+          this.setState({
+            inputValue,
+          });
+        }}
+      />
+      {
+        sortWords(this.arr, this.state.inputValue || '').map(s => (<div>{s[1]}</div>))
+      }
       <Button
         type="primary"
         onClick={() => {

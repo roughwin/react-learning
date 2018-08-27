@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import TransitionEx, { CssTransitionHOC } from 'components/common/react_transition'
 import DndTest from 'components/dnd';
+import FormatObj from 'components/common/format_obj';
 
 @withRouter
 class TransitionRoutes extends Component {
@@ -53,7 +54,7 @@ export default class Routes extends Component {
       }} />
       <Route path="/test/react-transition-group" component={TransitionEx} />
       <Route path="/test/dnd-test" component={DndTest} />
-      
+      <Route path="/test/format-obj" component={FormatObj} />
       {/* <Route path="/webgl" component={WebGl} /> */}
     </TransitionRoutes>
 

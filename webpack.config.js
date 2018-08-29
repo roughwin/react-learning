@@ -92,9 +92,12 @@ module.exports = {
       test: /\.(jpg|png)$/,
       loader: 'url-loader',
     }, {
-      test: /worker.js$/,
-      loader: 'shared-worker-loader',
-    }],
+        test: /\.shared_worker\.js$/,
+        use: ['shared-worker-loader', 'babel-loader'],
+    }, {
+        test: /\.worker\.js$/,
+        use: ['worker-loader', 'babel-loader'],
+    },],
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],

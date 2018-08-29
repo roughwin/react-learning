@@ -1,4 +1,5 @@
-const word = require('./word1.json')
+const word = require('./word1.json');
+
 const map = {};
 Object.keys(word).forEach(k => {
   const s = word[k].split('');
@@ -9,7 +10,7 @@ Object.keys(word).forEach(k => {
       map[c] = [k];
     }
   });
-})
+});
 
 function genPinyin(s) {
   const r = [];
@@ -26,7 +27,12 @@ function genPinyin(s) {
 }
 
 
-
+/**
+ * 汉字转为 拼音
+ * line：原始数据
+ * pinyin：原始数据对应的拼音数组
+ * @param {array} arrs
+ */
 function trans(arrs) {
   return arrs.map((c, originIndex) => ({
     pinyin: genPinyin(c),
@@ -35,6 +41,12 @@ function trans(arrs) {
   }));
 }
 
+
+/**
+ * 
+ * @param {*} line 一行数据
+ * @param {*} test 
+ */
 function rank(line, test) {
   const testArr = test.split('');
   let rankNum = 0;
@@ -67,6 +79,8 @@ function getPos(line, char, startPos) {
   }
 }
 
+
+// 筛选
 function filter(arr, testStr) {
   const str = testStr.trim();
   if (!str) return arr.map(a => ([1, a.line]))

@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import Transition from 'react-transition-group/Transition'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Route, Switch } from 'react-router-dom'
+import SelectPlus from './select-plus';
 
-import { Button, Input } from 'antd'
+import { Button, Input, Select } from 'antd'
 import { filter as sortWords, trans, rank } from './sortwords';
 const duration = 150
+
+const { Option } = Select;
 
 const defaultStyle = {
   transition: `${duration}ms ease-in-out`,
@@ -111,6 +114,10 @@ class TransitionEx extends Component {
 
   render() {
     return <div>
+      <Select style={{width: 300}}>
+        <Option key="1" value="a">hello</Option>
+      </Select>
+      <SelectPlus></SelectPlus>
       <Input
         onChange={(e) => {
           const inputValue = e ? e.target.value : '';

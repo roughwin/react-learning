@@ -45,7 +45,7 @@ export default class SelectPlus extends Component {
       }
     });
     return selectValues.map(v => {
-      if (menuListItems[v]) {
+      if (kv[v]) {
         return v;
       } else {
         const item = this.itemsKv[v];

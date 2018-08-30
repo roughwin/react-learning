@@ -87,7 +87,7 @@ function filter(arr, testStr) {
   return arr.map(l => {
     const { pinyin, line, originIndex } = l;
     const r = rank(pinyin, str);
-    return ([r, line]);
+    return ([r, line, originIndex]);
   }).filter(a => a[0]);
 }
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Transition from 'react-transition-group/Transition'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { Route, Switch } from 'react-router-dom'
-import PinyinWorker from 'components/workers/pinyin.worker.js';
 import SelectPlus from './select-plus';
 
 import { Button, Input, Select } from 'antd'
@@ -11,9 +10,6 @@ const duration = 150
 
 const { Option } = Select;
 // console.log(Worker)
-window.pinyinWorker = PinyinWorker;
-const worker = new PinyinWorker();
-worker.onmessage = console.log;
 
 const defaultStyle = {
   transition: `${duration}ms ease-in-out`,

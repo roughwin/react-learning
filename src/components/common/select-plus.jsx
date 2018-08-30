@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { Trigger } from 'rc-trigger';
-import { Select } from 'antd';
+import { Select, Button, Spin } from 'antd';
 
-const { Option } = Select;
+import { filter as sortWords, trans as str2pinyin } from './sortwords';
 
 export default class SelectPlus extends Component {
   constructor(props) {
     super(props);
     const { children } = props;
+    const allItems = this.children2Itmes(children);
     this.state = {
-      popOverVisible: false,
-      items: this.children2Itmes(children),
-      selectValues: []
+      items: allItems,
+      filterItems: allItems,
+      selectValues: [],
     };
   }
 
@@ -27,6 +27,7 @@ export default class SelectPlus extends Component {
       }
       return item;
     });
+    this.itemsPinyinArr = str2pinyin(items.map(i => i.label));
     this.itemsKv = kv;
     return items;
   }
@@ -62,6 +63,28 @@ export default class SelectPlus extends Component {
     });
   }
 
+  handleSearch = (keyword = '') => {
+    this.setState({
+      searching: true,
+      filterItems: [],
+    });
+    if (this.searchTimer) {
+      clearTimeout(this.searchTimer);
+    }
+    this.searchTimer = setTimeout(() => {
+      let filterResult = this.state.items;
+      if (keyword) {
+        const result = sortWords(this.itemsPinyinArr, keyword);
+        filterResult = result.map(([rank, label, index]) => (this.state.items[index]));
+      }
+      this.setState({
+        filterItems: filterResult,
+        searching: false,
+      });
+      this.searchTimer = false;
+    }, 300);
+  }
+
   handleSelect = (newV) => {
     const { selectValues } = this.state;
     this.setState({
@@ -79,53 +102,51 @@ export default class SelectPlus extends Component {
     this.setState({ selectValues });
   }
 
-  render() {
-    const { items, selectValues } = this.state;
+  handleSelectAll = () => {
+    this.setState({
+      selectValues: this.state.filterItems.map(i => i.value),
+    });
+  }
 
+  handleClearAll = () => {
+    this.setState({
+      selectValues: [],
+    });
+  }
+
+  handleChange = (v) => {
+    if (v && v.length === 0) {
+      this.handleClearAll();
+    }
+  }
+
+  render() {
+    const { filterItems, selectValues, searching } = this.state;
+    const menuListItems = filterItems.slice(0, 20);
     return <Select
         {...this.props}
-        value={this.getShowValues(selectValues, items)}
+        allowClear
+        filterOption={false}
+        onChange={this.handleChange}
+        value={this.getShowValues(selectValues, menuListItems)}
         onSelect={this.handleSelect}
         onDeselect={this.handleDeselect}
-        onChange={(v) => {
-          console.log('on change', v)
-        }}
-        onPopupScroll={}
-        maxTagCount={3}
+        maxTagCount={2}
+        onSearch={this.handleSearch}
         mode="multiple"
       >
+        <Select.Option key="select__all" value="select__all" disabled>
+          <div>
+            <Button
+              size="small"
+              onClick={this.handleSelectAll}
+            >选择全部</Button>
+            {searching ? <Spin size="small" /> : null}
+          </div>
+        </Select.Option>
         {
-          items.map(item => <Option key={item.key} value={item.value}>{item.label}</Option>)
+          menuListItems.map(item => <Select.Option key={item.key} value={item.value}>{item.label}</Select.Option>)
         }
       </Select>;
-  }
-}
-
-
-
-class SelectMenu extends Component {
-  render() {
-    const { items, visible } = this.props;
-    return <div
-      className={['ant-select-dropdown',
-      'ant-select-dropdown--single',
-      'ant-select-dropdown-placement-bottomLeft',
-      !visible && 'ant-select-dropdown-hidden'
-      ].join(' ')}
-      style={{
-        width: 300,
-        top: 68,
-        left: 0
-      }}
-    >
-      <ul className="ant-select-dropdown-menu  ant-select-dropdown-menu-root ant-select-dropdown-menu-vertical">
-        {
-          items.map(i => <li
-            key={i.key}
-            className="ant-select-dropdown-menu-item"
-          >{i.label}</li>)
-        }
-      </ul>
-    </div>
   }
 }

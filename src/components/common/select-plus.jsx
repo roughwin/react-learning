@@ -1,46 +1,102 @@
 import React, { Component } from 'react';
 import { Trigger } from 'rc-trigger';
-import { Select, Popover } from 'antd';
-const classNames = [
-  'ant-select-focused',
-  'ant-select-open',
-  'ant-select',
-  'ant-select-enabled',
-  'ant-select-selection__rendered',
-  'ant-select-arrow'
-]
+import { Select } from 'antd';
+
+const { Option } = Select;
+
 export default class SelectPlus extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { children } = props;
     this.state = {
       popOverVisible: false,
-      items: [],
+      items: this.children2Itmes(children),
+      selectValues: []
     };
   }
 
-  componentWillReceiveProps(newPorps) {
-    let { children } = newPorps;
+  children2Itmes = (children) => {
+    const kv = {};
     if (!Array.isArray(children)) {
       children = [children]
     }
-    const items = children.filter(c => c).map(c => ({ key: c.key, value: c.props.value, label: c.props.children }))
-    this.setState({ items });
+    const items = children.filter(c => c).map(c => {
+      const item = { key: c.key, value: c.props && c.props.value, label: c.props && c.props.children };
+      if (item.value !== undefined) {
+        kv[item.value] = item;
+      }
+      return item;
+    });
+    this.itemsKv = kv;
+    return items;
+  }
+
+  /**
+   * 如果value在当前menuList内，则返回value，否则返回label
+   * menuListItems: 当前列表渲染出来的options
+   * selectValues: 当前选中项的values
+   */
+  getShowValues = (selectValues, menuListItems) => {
+    const kv = {};
+    menuListItems.forEach(i => {
+      if (i.value) {
+        kv[i.value] = i;
+      }
+    });
+    return selectValues.map(v => {
+      if (menuListItems[v]) {
+        return v;
+      } else {
+        const item = this.itemsKv[v];
+        if (item) {
+          return item.label;
+        }
+      }
+      return v;
+    });
+  }
+  componentWillReceiveProps(newPorps) {
+    let { children } = newPorps;
+    this.setState({
+      items: this.children2Itmes(children),
+    });
+  }
+
+  handleSelect = (newV) => {
+    const { selectValues } = this.state;
+    this.setState({
+      selectValues: [...selectValues, newV],
+    })
+  }
+
+  handleDeselect = (rmV) => {
+    const { selectValues } = this.state;
+    const index = selectValues.findIndex(ele => ele === rmV);
+    if (index < 0) {
+      throw new Error('Cannot find deselect item.');
+    }
+    selectValues.splice(index, 1);
+    this.setState({ selectValues });
   }
 
   render() {
+    const { items, selectValues } = this.state;
+
     return <Select
         {...this.props}
-        onFocus={() => {
-          this.setState({
-            popOverVisible: true,
-          });
+        value={this.getShowValues(selectValues, items)}
+        onSelect={this.handleSelect}
+        onDeselect={this.handleDeselect}
+        onChange={(v) => {
+          console.log('on change', v)
         }}
-        onBlur={() => {
-          this.setState({
-            popOverVisible: false,
-          });
-        }}
+        onPopupScroll={}
+        maxTagCount={3}
+        mode="multiple"
       >
+        {
+          items.map(item => <Option key={item.key} value={item.value}>{item.label}</Option>)
+        }
       </Select>;
   }
 }

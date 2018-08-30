@@ -19,6 +19,11 @@ const devServer = {
   hot: true,
   port: 3001,
   host: '0.0.0.0',
+  // disableHostCheck: true,
+  allowedHosts: [
+    'react-test.vcap.me',
+    'localost',
+  ],
   stats: {
     colors: true,
     chunks: false,

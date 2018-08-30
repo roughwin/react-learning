@@ -147,9 +147,10 @@ class TransitionEx extends Component {
       </Select>
       <SelectPlus
         style={{ width: 300 }}
+        
       >
         {
-          arr.map(i => <Option key={`${i}`} value={i}>{i}</Option>)
+          arr.map(i => <Option key={`${i}`} value={i}>{`label-${i}`}</Option>)
         }
       </SelectPlus>
       <Input

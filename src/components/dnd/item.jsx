@@ -51,7 +51,7 @@ export default class DnDItem extends Component {
     const { connectDropTarget, connectDragSource, isDragging, isOtherDragging } = this.props;
     const dropTarget = connectDropTarget(<div
       style={{
-        opacity: isDragging ? 0.5 : 1,
+        opacity: isDragging ? 0 : 1,
         position: 'relative',
         cursor: this.state.dragable ? 'move' : 'default',
       }}
@@ -68,17 +68,21 @@ export default class DnDItem extends Component {
           filter: this.state.focus ? 'blur(2px)' : 'none'
         }}
       >
-        {this.props.children}
+        <div style={{ "pointerEvents": (this.state.focus || isOtherDragging) ? "none" : "auto" }}>
+          {this.props.children}
+        </div>
       </div>
       {
-        this.state.focus &&
+        (this.state.focus || this.state.inputFocus) &&
         <InputNumber
           size="small"
-          min={0}
+          min={1}
           max={24}
           precision={0}
           value={this.props.col}
           onChange={this.props.onChange}
+          onFocus={() => this.setState({ inputFocus: true })}
+          onBlur={() => this.setState({ inputFocus: false })}
           onMouseOver={() => {
             this.setState({
               dragable: false,

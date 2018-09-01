@@ -19,6 +19,11 @@ const devServer = {
   hot: true,
   port: 3001,
   host: '0.0.0.0',
+  // disableHostCheck: true,
+  allowedHosts: [
+    'react-test.vcap.me',
+    'localost',
+  ],
   stats: {
     colors: true,
     chunks: false,
@@ -92,9 +97,12 @@ module.exports = {
       test: /\.(jpg|png)$/,
       loader: 'url-loader',
     }, {
-      test: /worker.js$/,
-      loader: 'shared-worker-loader',
-    }],
+        test: /\.shared_worker\.js$/,
+        use: ['shared-worker-loader', 'babel-loader'],
+    }, {
+        test: /\.worker\.js$/,
+        use: ['worker-loader', 'babel-loader'],
+    },],
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],

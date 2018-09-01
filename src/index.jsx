@@ -22,7 +22,6 @@ const Option = Select.Option;
 const rootEl = document.getElementById('root');
 
 const ele = <div>
-  
   <Router>
     <Route path="/">
       <div>

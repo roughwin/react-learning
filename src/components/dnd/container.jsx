@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { Col } from 'antd';
 import { DnDItem } from './item';
 
 @DragDropContext(HTML5Backend)
@@ -24,9 +25,9 @@ export default class DndContainer extends Component {
     this.props.onChange(items);
   }
   render() {
-    return <div>
+    return <React.Fragment>
       {
-        this.props.items.map((item, index) => (
+        this.props.items.map((item, index) => (<Col span={item.col} key={item.id}>
           <DnDItem
             isOtherDragging={this.state.isOneDragging}
             onDragChange={(isOneDragging) => {this.setState({ isOneDragging })}}
@@ -37,12 +38,13 @@ export default class DndContainer extends Component {
             index={index}
             key={item.key}
           >
-            {
-              item.ele
-            }
+          {
+            item.ele
+          }
           </DnDItem>
+        </Col>
         ))
       }
-    </div>;
+    </React.Fragment>;
   }
 }

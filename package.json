@@ -26,6 +26,7 @@
   "dependencies": {
     "antd": "^3.6.5",
     "driver.js": "^0.3.8",
+    "echarts": "^4.2.0-rc.1",
     "gpu.js": "^1.2.0",
     "lodash": "^4.17.4",
     "mobx": "^5.0.3",

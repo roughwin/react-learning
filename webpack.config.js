@@ -22,6 +22,7 @@ const devServer = {
   // disableHostCheck: true,
   allowedHosts: [
     'react-test.vcap.me',
+    'react-test.local.roughwin.com',
     'localost',
   ],
   stats: {

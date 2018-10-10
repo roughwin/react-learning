@@ -10,6 +10,7 @@ export default class MessageBox extends Component {
       text: '',
     }
     this.sessionId = 1231212
+    this.retryCount = 0;
     this.connectWs(this.sessionId);
   }
   
@@ -23,11 +24,29 @@ export default class MessageBox extends Component {
       } catch (e) {
         console.log(e);
       }
-      const { type } = messageObj;
+      this.onMessage(messageObj);
+      // const { type } = messageObj;
     }
     setInterval(() => {
       this.ws.send(JSON.stringify({ type: 'ping' }));
+      this.retryCount += 1;
     }, 1000 * 30);
+  }
+
+  onMessage = (msg) => {
+    const { type, textMsg } = msg;
+    switch (type) {
+      case 'pong':
+        this.retryCount = 0;
+        break;
+      case 'text':
+        const { messageList = [] } = this.state;
+        messageList.push(textMsg);
+        this.setState({ messageList });
+        break;
+      default:
+        break;
+    }
   }
 
   handleTextChange = (e) => {
@@ -72,6 +91,7 @@ export default class MessageBox extends Component {
   }
   render() {
     return <div>
+      <div>{JSON.stringify(this.state.messageList)}</div>
       <Group>
         <Col span={20}>
           <Input autosize onPressEnter={this.hanldeSend} value={this.state.text} onChange={this.handleTextChange} />

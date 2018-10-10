@@ -1,13 +1,39 @@
 import React, { Component } from 'react';
-import { Input, Button, Col, message } from 'antd';
+import { Input, Button, Row, Col, message, List, Avatar } from 'antd';
 
-const { Group } = Input;
+const { Group, Search } = Input;
+
+const TEXT_MSG = {
+  type: 'text',
+  userId: 1,
+  direction: 'fromUser',
+  message: 'demo text hello',
+}
+
+// const TextItem = (props) => (<span></span>)
+
+class MessageItem extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    const { justify, children, avatarOrder } = this.props;
+    return <Row type="flex" justify={justify} align="bottom">
+      <Col order={avatarOrder}><Avatar size="large" icon="user" /></Col>
+      <Col order={1}>{children}</Col>
+    </Row>
+  }
+}
 
 export default class MessageBox extends Component {
   constructor() {
     super();
     this.state = {
       text: '',
+      messageList: [
+        TEXT_MSG,
+        {...TEXT_MSG, direction: 'toUser'}
+      ]
     }
     this.sessionId = 1231212
     this.retryCount = 0;
@@ -54,28 +80,15 @@ export default class MessageBox extends Component {
     this.setState({
       text: a,
     });
-    console.log(a)
   }
 
-  hanldeSend = (e) => {
-    e.preventDefault();
+  hanldeSend = () => {
     const { text } = this.state;
     if (!text) return;
     this.setState({
       sendLoading: true,
     });
     try {
-      // const url = 'https://hackathon2018.smartstudy.com/hello-world/api/crm/message/send-to-user';
-      // fetch(url, {
-      //   method: 'post',
-      //   mode: 'cors',
-      //   headers: {
-      //     "Content-Type": "application/json; charset=utf-8",
-      //   },
-      //   body: JSON.stringify({
-      //     content: text,
-      //   }),
-      // })
       if (this.ws.readyState !== 1) {
         this.connectWs(this.sessionId)
       }
@@ -90,16 +103,50 @@ export default class MessageBox extends Component {
     }
   }
   render() {
-    return <div>
-      <div>{JSON.stringify(this.state.messageList)}</div>
-      <Group>
-        <Col span={20}>
-          <Input autosize onPressEnter={this.hanldeSend} value={this.state.text} onChange={this.handleTextChange} />
-        </Col>
-        <Col span={4}>
-          <Button type="primary" loading={this.state.sendLoading} disabled={!this.state.text} onClick={this.hanldeSend}>发送</Button>
-        </Col>
-      </Group>
+    return <div style={{ width: '70vw', margin: '0 auto'}}>
+      <div>
+        {
+          // JSON.stringify(this.state.messageList)
+          this.state.messageList.map(msg => {
+            const { type, direction } = msg;
+            let justify = 'center';
+            let avatarOrder = 0;
+            switch (direction) {
+              case 'fromUser':
+                justify = 'start'
+                avatarOrder = 0;
+                break;
+              case 'toUser':
+                justify = 'end';
+                avatarOrder = 10;
+                break;
+              default:
+                break;
+            }
+            return <MessageItem justify={justify} avatarOrder={avatarOrder}>{msg.message}</MessageItem>
+          })
+        }
+      </div>
+      <Search
+        placeholder="input text"
+        value={this.state.text}
+        onSearch={this.hanldeSend}
+        onChange={this.handleTextChange}
+        enterButton="发送"
+      />
     </div>
   }
 }
+
+
+// const url = 'https://hackathon2018.smartstudy.com/hello-world/api/crm/message/send-to-user';
+// fetch(url, {
+//   method: 'post',
+//   mode: 'cors',
+//   headers: {
+//     "Content-Type": "application/json; charset=utf-8",
+//   },
+//   body: JSON.stringify({
+//     content: text,
+//   }),
+// })

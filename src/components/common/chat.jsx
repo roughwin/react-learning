@@ -75,6 +75,9 @@ export default class MessageBox extends Component {
     }
   }
 
+  // TODO: fetchSessionLogList
+  // TODO: fetchUserInfo
+
   handleTextChange = (e) => {
     const a = e && e.target && e.target.value || '';
     this.setState({

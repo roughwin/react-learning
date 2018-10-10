@@ -17,9 +17,9 @@ class MessageItem extends Component {
     super(props);
   }
   render() {
-    const { justify, children, avatarOrder } = this.props;
+    const { justify, children, avatarOrder, avatar } = this.props;
     return <Row type="flex" justify={justify} align="bottom">
-      <Col order={avatarOrder}><Avatar size="large" icon="user" /></Col>
+      <Col order={avatarOrder}>{avatar}</Col>
       <Col order={1}>{children}</Col>
     </Row>
   }
@@ -111,19 +111,26 @@ export default class MessageBox extends Component {
             const { type, direction } = msg;
             let justify = 'center';
             let avatarOrder = 0;
+            let avatar;
             switch (direction) {
               case 'fromUser':
                 justify = 'start'
                 avatarOrder = 0;
+                avatar = <Avatar size="large">User</Avatar>
                 break;
               case 'toUser':
                 justify = 'end';
                 avatarOrder = 10;
+                avatar = <Avatar size="large">Staff</Avatar>
                 break;
               default:
                 break;
             }
-            return <MessageItem justify={justify} avatarOrder={avatarOrder}>{msg.message}</MessageItem>
+            return <MessageItem
+              justify={justify}
+              avatarOrder={avatarOrder}
+              avatar={avatar}
+            >{msg.message}</MessageItem>
           })
         }
       </div>

@@ -3,6 +3,7 @@ import { Input, Button, Row, Col, message, List, Avatar } from 'antd';
 
 const { Group, Search } = Input;
 
+const SUPER_MAX = 100000
 const TEXT_MSG = {
   type: 'text',
   userId: 1,
@@ -46,7 +47,7 @@ export default class MessageBox extends Component {
       const { data } = msg;
       let messageObj = {};
       try {
-        JSON.parse(data);
+        messageObj = JSON.parse(data);
       } catch (e) {
         console.log(e);
       }
@@ -60,15 +61,20 @@ export default class MessageBox extends Component {
   }
 
   onMessage = (msg) => {
-    const { type, textMsg } = msg;
+    const { type } = msg;
     switch (type) {
       case 'pong':
         this.retryCount = 0;
         break;
       case 'text':
         const { messageList = [] } = this.state;
-        messageList.push(textMsg);
-        this.setState({ messageList });
+        messageList.push(msg);
+        
+        this.setState({ messageList }, () => {
+          if (this.messageListEl) {
+            this.messageListEl.scrollTop = SUPER_MAX;
+          }
+        });
         break;
       default:
         break;
@@ -85,6 +91,16 @@ export default class MessageBox extends Component {
     });
   }
 
+  sendTextMsg = (text) => {
+    const textMsg = {
+      type: 'text',     
+      // userId: 1,
+     direction: 'toUser',
+      message: text,
+    }
+    this.ws.send(JSON.stringify(textMsg));
+  }
+
   hanldeSend = () => {
     const { text } = this.state;
     if (!text) return;
@@ -95,7 +111,7 @@ export default class MessageBox extends Component {
       if (this.ws.readyState !== 1) {
         this.connectWs(this.sessionId)
       }
-      this.ws.send(text);
+      this.sendTextMsg(text);
       this.setState({
         text: ''
       });
@@ -107,7 +123,15 @@ export default class MessageBox extends Component {
   }
   render() {
     return <div style={{ width: '70vw', margin: '0 auto'}}>
-      <div>
+      <div
+        ref={el => {
+          this.messageListEl = el;
+        }}
+        style={{
+          height: 'calc(100vh - 100px)',
+          overflow: 'scroll',
+        }}
+      >
         {
           // JSON.stringify(this.state.messageList)
           this.state.messageList.map(msg => {

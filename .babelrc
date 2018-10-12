@@ -1,22 +1,11 @@
 {
-  "presets": [
-    "react",
-    [
-      "env",
-      {
-        "targets": {
-          "chrome": 48
-        }
-      }
-    ]
-  ],
+  "presets": ["react","es2015","stage-0"],
   "plugins": [
     ["import", { "libraryName": "antd", "style": true }],
     "transform-decorators-legacy",
     "transform-class-properties",
     "transform-object-rest-spread",
-    "transform-runtime",
-    "dynamic-import-webpack"
+    "transform-runtime"
   ],
   "ignore": []
 }

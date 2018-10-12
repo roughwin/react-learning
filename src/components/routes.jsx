@@ -3,9 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import TransitionEx, { CssTransitionHOC } from 'components/common/react_transition'
-import DndTest from 'components/dnd';
-import FormatObj from 'components/common/format_obj';
-import Graph from 'components/common/graph';
+
 import Chat from 'components/common/chat';
 
 @withRouter

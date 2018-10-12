@@ -49,7 +49,7 @@ class TransitionRoutes extends Component {
 export default class Routes extends Component {
   render() {
     return <div>
-      <Route path="/chat" component={Chat} />
+      <Route path="/hw/chat" component={Chat} />
     </div>
 
   }

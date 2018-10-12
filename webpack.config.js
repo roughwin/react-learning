@@ -24,6 +24,7 @@ const devServer = {
     'react-test.vcap.me',
     'react-test.local.roughwin.com',
     'localost',
+    'hackathon2018.smartstudy.com',
   ],
   stats: {
     colors: true,

@@ -10,8 +10,10 @@ import A from 'components/common/decoractor'
 import { routerLink } from './index.less';
 
 const rootEl = document.getElementById('root');
+console.log('hello');
 
 const ele = <div>
+  hello
   <Router>
     <Route path="/">
       <div>

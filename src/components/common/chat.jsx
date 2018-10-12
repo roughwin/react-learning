@@ -11,6 +11,9 @@ const TEXT_MSG = {
   message: 'demo text hello',
 }
 
+
+console.log('hello in chat');
+
 // const TextItem = (props) => (<span></span>)
 
 class MessageItem extends Component {
@@ -122,6 +125,7 @@ export default class MessageBox extends Component {
     }
   }
   render() {
+    console.log('hello in chat render')
     return <div style={{ width: '70vw', margin: '0 auto'}}>
       <div
         ref={el => {

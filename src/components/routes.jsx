@@ -5,6 +5,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import TransitionEx, { CssTransitionHOC } from 'components/common/react_transition'
 
 import Chat from 'components/common/chat';
+import Graph from 'components/common/graph';
 
 @withRouter
 class TransitionRoutes extends Component {
@@ -50,7 +51,7 @@ export default class Routes extends Component {
   render() {
     return <div>
       <Route path="/hw/chat" component={Chat} />
-    </div>
-
+      <Route path="/hw/graph" component={Graph} />
+    </div>;
   }
 }

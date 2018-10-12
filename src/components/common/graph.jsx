@@ -56,29 +56,32 @@ const EXAMPLE_DATA = {
 export default class Graph extends Component {
   constructor() {
     super();
-    setInterval(() => {
-      const newPoint = {
-        category: 1,
-        name: Math.random().toString(32),
-        value: 1,
-      }
-      EXAMPLE_DATA.data.push(newPoint);
-      const randomData = EXAMPLE_DATA.data[Math.ceil(Math.random() * (EXAMPLE_DATA.data.length - 2))];
+    getGraph(2, 123).then(list => {
       
-      EXAMPLE_DATA.links.push({
-        source: randomData.name,
-        target: newPoint.name,
-      });
-      if (this.myChart) {
-        this.myChart.setOption({
-          series: [{
-            roam: true,
-            data: EXAMPLE_DATA.data,
-            edges: EXAMPLE_DATA.links,
-          }]
-        });
-      }
-    }, 10000);
+    })
+    // setInterval(() => {
+    //   const newPoint = {
+    //     category: 1,
+    //     name: Math.random().toString(32),
+    //     value: 1,
+    //   }
+    //   EXAMPLE_DATA.data.push(newPoint);
+    //   const randomData = EXAMPLE_DATA.data[Math.ceil(Math.random() * (EXAMPLE_DATA.data.length - 2))];
+      
+    //   EXAMPLE_DATA.links.push({
+    //     source: randomData.name,
+    //     target: newPoint.name,
+    //   });
+    //   if (this.myChart) {
+    //     this.myChart.setOption({
+    //       series: [{
+    //         roam: true,
+    //         data: EXAMPLE_DATA.data,
+    //         edges: EXAMPLE_DATA.links,
+    //       }]
+    //     });
+    //   }
+    // }, 10000);
   }
   init = (el) => {
     console.log(el)
@@ -109,4 +112,31 @@ export default class Graph extends Component {
       <div style={{width: 600, height:400}} ref={this.init}></div>
     </div>
   }
+}
+
+
+async function getUserHistLinks(userId, pageId) {
+  const url = `https://hackathon2018.smartstudy.com/hello-world/api/back/graph/hist-link?userId=${userId}&pageId=${pageId}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  })
+  console.log(result);
+  return result;
+}
+
+async function getGraph(userId, pageId) {
+  const url = `https://hackathon2018.smartstudy.com/hello-world/api/back/graph/all?userId=${userId}&pageId=${pageId}`;
+  const result = await fetch(url, {
+    method: 'get',
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+    },
+  })
+  console.log(result);
+  return result;
 }

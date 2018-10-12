@@ -13,7 +13,6 @@ const rootEl = document.getElementById('root');
 console.log('hello');
 
 const ele = <div>
-  hello
   <Router>
     <Route path="/">
       <div>

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Echarts from 'echarts';
+import _ from 'lodash';
+
 const EXAMPLE_DATA = {
   data: [
     {
@@ -56,35 +58,12 @@ const EXAMPLE_DATA = {
 export default class Graph extends Component {
   constructor() {
     super();
-    getGraph(2, 123).then(list => {
-      
-    })
-    // setInterval(() => {
-    //   const newPoint = {
-    //     category: 1,
-    //     name: Math.random().toString(32),
-    //     value: 1,
-    //   }
-    //   EXAMPLE_DATA.data.push(newPoint);
-    //   const randomData = EXAMPLE_DATA.data[Math.ceil(Math.random() * (EXAMPLE_DATA.data.length - 2))];
-      
-    //   EXAMPLE_DATA.links.push({
-    //     source: randomData.name,
-    //     target: newPoint.name,
-    //   });
-    //   if (this.myChart) {
-    //     this.myChart.setOption({
-    //       series: [{
-    //         roam: true,
-    //         data: EXAMPLE_DATA.data,
-    //         edges: EXAMPLE_DATA.links,
-    //       }]
-    //     });
-    //   }
-    // }, 10000);
   }
   init = (el) => {
     console.log(el)
+    if (this.myChart) {
+      return;
+    }
     this.myChart = Echarts.init(el);
     // 绘制图表
     this.myChart.setOption({
@@ -96,17 +75,44 @@ export default class Graph extends Component {
       },
       tooltip: {},
       series: [{
-        name: 'helo',
+        name: 'user',
         type: 'graph',
         layout: 'force',
         edgeSymbol: ['', 'arrow'],
-        data: EXAMPLE_DATA.data,
-        edges: EXAMPLE_DATA.links,
-        categories: EXAMPLE_DATA.categories,
+        data: [],
+        edges: [],
+        // categories: EXAMPLE_DATA.categories,
         edgeSymbolSize: 5
       }],
     });
+    this.setUserGraph();
   }
+
+  setUserGraph = () => {
+    getGraph(2, 123).then(list => {
+      console.log(list)
+      const data = _.uniq(list.reduce((sum, c) => ([...sum, c.currentUserId, c.fromUserId]), [])).map(l => ({
+        category: 1,
+        name: l,
+        // value: 1,
+      }));
+      const links = list.map(l => ({
+        source: l.fromUserId,
+        target: l.currentUserId,
+      }));
+      if (this.myChart) {
+        console.log('set chat')
+        this.myChart.setOption({
+          series: [{
+            roam: true,
+            data,
+            edges: links,
+          }]
+        });
+      }
+    })
+  }
+
   render() {
     return <div style={{width: '100vw', height: '90vh'}}>
       <div style={{width: 600, height:400}} ref={this.init}></div>
@@ -138,5 +144,5 @@ async function getGraph(userId, pageId) {
     },
   })
   console.log(result);
-  return result;
+  return await result.json();
 }

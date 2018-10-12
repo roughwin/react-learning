@@ -35,13 +35,14 @@ export default class MessageBox extends Component {
     this.state = {
       text: '',
       messageList: [
-        TEXT_MSG,
-        {...TEXT_MSG, direction: 'toUser'}
+        // TEXT_MSG,
+        // {...TEXT_MSG, direction: 'toUser'}
       ]
     }
-    this.sessionId = 1231212
+    this.sessionId = 'mp_1'
     this.retryCount = 0;
     this.connectWs(this.sessionId);
+    this.fetchUserMessageLog()
   }
   
   connectWs = (sessionId) => {
@@ -52,7 +53,7 @@ export default class MessageBox extends Component {
       try {
         messageObj = JSON.parse(data);
       } catch (e) {
-        console.log(e);
+        console.log(e, data, msg);
       }
       this.onMessage(messageObj);
       // const { type } = messageObj;
@@ -72,7 +73,6 @@ export default class MessageBox extends Component {
       case 'text':
         const { messageList = [] } = this.state;
         messageList.push(msg);
-        
         this.setState({ messageList }, () => {
           if (this.messageListEl) {
             this.messageListEl.scrollTop = SUPER_MAX;
@@ -85,6 +85,23 @@ export default class MessageBox extends Component {
   }
 
   // TODO: fetchSessionLogList
+  fetchUserMessageLog = async () => {
+    const userId = this.sessionId.split('_')[1];
+    const url = `https://hackathon2018.smartstudy.com/hello-world/api/crm/message/list?userId=${userId}`
+    const a = await fetch(url, {
+      method: 'get',
+      mode: 'cors',
+    });
+    const list = await a.json();
+    // const { messageList = [] } = this.state;
+    // messageList.push(msg);
+    this.setState({ messageList: list }, () => {
+      if (this.messageListEl) {
+        this.messageListEl.scrollTop = SUPER_MAX;
+      }
+    });
+    console.log(list);
+  }
   // TODO: fetchUserInfo
 
   handleTextChange = (e) => {
@@ -98,10 +115,20 @@ export default class MessageBox extends Component {
     const textMsg = {
       type: 'text',     
       // userId: 1,
-     direction: 'toUser',
+      direction: 'toUser',
       message: text,
+      sessionId: this.sessionId,
     }
-    this.ws.send(JSON.stringify(textMsg));
+    
+    const url = 'https://hackathon2018.smartstudy.com/hello-world/api/crm/message/send-to-user';
+    fetch(url, {
+      method: 'post',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(textMsg),
+    })
   }
 
   hanldeSend = () => {
@@ -176,15 +203,3 @@ export default class MessageBox extends Component {
   }
 }
 
-
-// const url = 'https://hackathon2018.smartstudy.com/hello-world/api/crm/message/send-to-user';
-// fetch(url, {
-//   method: 'post',
-//   mode: 'cors',
-//   headers: {
-//     "Content-Type": "application/json; charset=utf-8",
-//   },
-//   body: JSON.stringify({
-//     content: text,
-//   }),
-// })

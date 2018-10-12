@@ -40,27 +40,19 @@ class TransitionRoutes extends Component {
           >
            {
              this.props.children
-           } 
+           }
           </Switch>
         </div>
       </CSSTransition>
     </TransitionGroup>
   }
 }
-// @withRouter
+
 export default class Routes extends Component {
   render() {
-    return <TransitionRoutes>
-      <Route path="/test/route2" render={() => {
-        return <div>route2</div>
-      }} />
-      <Route path="/test/react-transition-group" component={TransitionEx} />
-      <Route path="/test/dnd-test" component={DndTest} />
-      <Route path="/test/format-obj" component={FormatObj} />
-      <Route path="/test/graph" component={Graph} />
-      <Route path="/test/chat" component={Chat} />
-      {/* <Route path="/webgl" component={WebGl} /> */}
-    </TransitionRoutes>
+    return <div>
+      <Route path="/chat" component={Chat} />
+    </div>
 
   }
 }

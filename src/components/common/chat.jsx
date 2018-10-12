@@ -166,7 +166,7 @@ export default class MessageBox extends Component {
         {
           // JSON.stringify(this.state.messageList)
           this.state.messageList.map(msg => {
-            const { type, direction } = msg;
+            const { type, direction, serviceId } = msg;
             let justify = 'center';
             let avatarOrder = 0;
             let avatar;
@@ -179,7 +179,7 @@ export default class MessageBox extends Component {
               case 'toUser':
                 justify = 'end';
                 avatarOrder = 10;
-                avatar = <Avatar size="large">Staff</Avatar>
+                avatar = <Avatar size="large">{serviceId || 'U'}</Avatar>
                 break;
               default:
                 break;

@@ -39,7 +39,7 @@ export default class MessageBox extends Component {
         // {...TEXT_MSG, direction: 'toUser'}
       ]
     }
-    this.sessionId = 'mp_1'
+    this.sessionId = getUrlVars().sessionId
     this.retryCount = 0;
     this.connectWs(this.sessionId);
     this.fetchUserMessageLog()
@@ -188,7 +188,7 @@ export default class MessageBox extends Component {
               justify={justify}
               avatarOrder={avatarOrder}
               avatar={avatar}
-            >{msg.message}</MessageItem>
+            >{msg.message || '【无消息内容】'}</MessageItem>
           })
         }
       </div>
@@ -203,3 +203,10 @@ export default class MessageBox extends Component {
   }
 }
 
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value;
+  });
+  return vars;
+}

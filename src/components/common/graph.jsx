@@ -86,10 +86,12 @@ export default class Graph extends Component {
       }],
     });
     this.setUserGraph();
+    setInterval(this.setUserGraph, 5000);
   }
 
   setUserGraph = () => {
-    getGraph(2, 123).then(list => {
+    const { userId = '2', pageId = '123' } = getUrlVars();
+    getGraph(userId, pageId).then(list => {
       console.log(list)
       const data = _.uniq(list.reduce((sum, c) => ([...sum, c.currentUserId, c.fromUserId]), [])).map(l => ({
         category: 1,
@@ -145,4 +147,12 @@ async function getGraph(userId, pageId) {
   })
   console.log(result);
   return await result.json();
+}
+
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      vars[key] = value;
+  });
+  return vars;
 }

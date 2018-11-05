@@ -36,7 +36,7 @@ export default class MessageBox extends Component {
         {...TEXT_MSG, direction: 'toUser'}
       ]
     }
-    this.sessionId = 1231212
+    this.sessionId = 'mp_1'
     this.retryCount = 0;
     this.connectWs(this.sessionId);
   }

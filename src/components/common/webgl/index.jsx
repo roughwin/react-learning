@@ -1,5 +1,20 @@
 import React, { Component } from 'react'
+function initVertexBuffers(gl, vertices) {
+  // var vertices = new Float32Array([0.0, 0.5, -0.5,-0.5, 0.5, -0.5, 0.6, 0.3])
+  var n = vertices.length / 2;
+  var vertexBuffer = gl.createBuffer();
+  if (!vertexBuffer) {
+    return -1;
+  }
 
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
+
+  var a_position = gl.getAttribLocation(gl.program, 'a_Position');
+  gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 0,0);
+  gl.enableVertexAttribArray(a_position);
+  return n;
+}
 export default class WebGl extends Component {
   initcanvas = (canvas) => {
     if (!canvas) return;
@@ -11,28 +26,22 @@ export default class WebGl extends Component {
         gl_PointSize = 9.0;
       }
     `
-      // 'void main() {\n' +
-      // ' gl_Position = vec4(-0.3, 0.2, 0.0, 1.0);\n' + // Coordinates
-      // ' gl_PointSize = 9.0;\n' + '}\n';
     var FSHADER_SOURCE =
       'void main() {\n' +
       ' gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' + // Set the color
       '}\n';
     initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)
     var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-    console.log('pos', a_Position)
-    gl.vertexAttrib3f(a_Position, 0.6, 0.0, 0.0);
+    
+    var n = initVertexBuffers(gl, new Float32Array([0.0, 0.5, -0.5,-0.5, 0.5, -0.5, 0.6, 0.3]));
+    gl.drawArrays(gl.TRIANGLES, 0,n);
     // gl.clearColor(0.0, 0.0, 0.0, 1.0);
     // gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.drawArrays(gl.POINTS, 0, 1);
+    // for (let x of [1, 2, 3, 4]) {
+    //   gl.vertexAttrib3f(a_Position, Math.random(), Math.random(), 0.0);
+    //   gl.drawArrays(gl.POINTS, 0,10);
+    // }
 
-    setInterval(() => {
-      // gl.clear(gl.COLOR_BUFFER_BIT);
-      for (let x of [1, 2, 3, 4]) {
-        gl.vertexAttrib3f(a_Position, Math.random(), Math.random(), 0.0);
-        gl.drawArrays(gl.POINTS, 0,10);
-      }
-    }, 1000)
   }
   render() {
     return <div>

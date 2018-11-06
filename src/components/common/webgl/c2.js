@@ -20,7 +20,6 @@ var FSHADER_SOURCE =
 
 export default function main(canvas) {
   // Retrieve <canvas> element
-  if (!canvas) return;
   // Get the rendering context for WebGL
   var gl = getWebGLContext(canvas);
   if (!gl) {
@@ -55,7 +54,7 @@ export default function main(canvas) {
   // Set the eye point and the viewing volume
   var mvpMatrix = new Matrix4();
   mvpMatrix.setPerspective(30, 1, 1, 100);
-  mvpMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
+  mvpMatrix.lookAt(3, 3, 7, 0, 0.5, 1, 0, 1, 0);
 
   // Pass the model view projection matrix to u_MvpMatrix
   gl.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
@@ -96,7 +95,7 @@ function initVertexBuffers(gl) {
     1, 6, 7,   1, 7, 2,    // left
     7, 4, 3,   7, 3, 2,    // down
     4, 7, 6,   4, 6, 5     // back
- ]);
+  ]);
 
   // Create a buffer object
   var vertexColorBuffer = gl.createBuffer();

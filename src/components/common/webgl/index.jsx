@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import c1 from './c1';
-import c2 from './c2';
+import c2 from './c3';
 
 export default class WebGl extends Component {
   
   render() {
     return <div>
-      <WebGlCanvas initcanvas={c2} />
+      <WebGlCanvas initcanvas={c1} />
       {/* <WebGlCanvas initcanvas={c1} /> */}
     </div>
   }

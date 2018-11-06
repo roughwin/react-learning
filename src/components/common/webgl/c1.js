@@ -14,7 +14,8 @@ function initcanvas(canvas) {
       '}\n';
     initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)
     var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-    
+    var a_posi2 = gl.getAttribLocation(gl.program, 'a_posi2');
+    console.log('fdsf', a_Position, a_posi2)
     var n = initVertexBuffers(gl, new Float32Array([0.0, 0.5, -0.5,-0.5, 0.5, -0.5, 0.6, 0.3]));
     gl.drawArrays(gl.TRIANGLES, 0,n);
     // gl.clearColor(0.0, 0.0, 0.0, 1.0);

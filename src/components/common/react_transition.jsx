@@ -116,31 +116,6 @@ class TransitionEx extends Component {
   render() {
     const arr = new Array(100).fill(0).map((c, i) => i);
     return <div>
-      <Select
-        style={{width: 300}}
-        onPopupScroll={(e) => {
-          console.log(e.target.scrollTop, e.target.offsetTop, e.target.scrollHeight)
-        }}
-        showSearch
-        onFocus={() => console.log('onfocus')}
-        onSearch={console.log}
-        onChange={console.log}
-        // getPopupContainer={() => { return document.createElement('div')} }
-      >
-        <Option key="select__all" value="select__all" disabled>
-          <div>
-            <Button
-              size="small"
-              onClick={() => {
-                console.log('click select all');
-              }}
-            >选择全部</Button>
-          </div>
-        </Option>
-        {
-          arr.map(i => <Option key={`${i}`} value={i}>{i}</Option>)
-        }
-      </Select>
       <SelectPlus
         style={{ width: 300 }}
         

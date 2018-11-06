@@ -35,6 +35,7 @@ const ele = <div>
         >route2</Link>
         <Link to="/test/react-transition-group" className={routerLink}>TEST transition</Link>
         <Link to="/test/dnd-test" className={routerLink}>DND</Link>
+        <Link to="/webgl" className={routerLink}>webgl</Link>
         <div
           style={{
             marginTop: '3rem'

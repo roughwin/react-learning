@@ -16,7 +16,9 @@ function initcanvas(canvas) {
     var a_Position = gl.getAttribLocation(gl.program, 'a_Position');
     var a_posi2 = gl.getAttribLocation(gl.program, 'a_posi2');
     console.log('fdsf', a_Position, a_posi2)
-    var n = initVertexBuffers(gl, new Float32Array([0.0, 0.5, -0.5,-0.5, 0.5, -0.5, 0.6, 0.3]));
+    var n = initVertexBuffers(gl, new Float32Array([
+      0.0, 0.5, 0.0, 1.0, -0.5,-0.5, 0.0, 1.0, 0.5, -0.5, 0.0, 1.0,
+    ]));
     gl.drawArrays(gl.TRIANGLES, 0,n);
     // gl.clearColor(0.0, 0.0, 0.0, 1.0);
     // gl.clear(gl.COLOR_BUFFER_BIT);
@@ -30,7 +32,7 @@ function initcanvas(canvas) {
 
 function initVertexBuffers(gl, vertices) {
   // var vertices = new Float32Array([0.0, 0.5, -0.5,-0.5, 0.5, -0.5, 0.6, 0.3])
-  var n = vertices.length / 2;
+  var n = vertices.length / 4;
   var vertexBuffer = gl.createBuffer();
   if (!vertexBuffer) {
     return -1;
@@ -40,7 +42,7 @@ function initVertexBuffers(gl, vertices) {
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
 
   var a_position = gl.getAttribLocation(gl.program, 'a_Position');
-  gl.vertexAttribPointer(a_position, 2, gl.FLOAT, false, 0,0);
+  gl.vertexAttribPointer(a_position, 4, gl.FLOAT, false, 0,0);
   gl.enableVertexAttribArray(a_position);
   return n;
 }

@@ -8,6 +8,7 @@ import FormatObj from 'components/common/format_obj';
 import Graph from 'components/common/graph';
 import Chat from 'components/common/chat';
 import WebGl from 'components/common/webgl';
+import BlocLearn from 'components/bloc_learn';
 
 @withRouter
 class TransitionRoutes extends Component {
@@ -52,9 +53,7 @@ class TransitionRoutes extends Component {
 export default class Routes extends Component {
   render() {
     return <TransitionRoutes>
-      <Route path="/test/route2" render={() => {
-        return <div>route2</div>
-      }} />
+      <Route path="/test/route2" component={BlocLearn} />
       <Route path="/test/react-transition-group" component={TransitionEx} />
       <Route path="/test/dnd-test" component={DndTest} />
       <Route path="/test/format-obj" component={FormatObj} />

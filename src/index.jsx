@@ -10,6 +10,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import 'moment/locale/zh-cn';
 import Routes from 'components/routes'
 import A from 'components/common/decoractor'
+
 import { routerLink } from './index.less';
 
 import Driver from 'driver.js'
@@ -32,7 +33,7 @@ const ele = <div>
         <Link
           className={routerLink}
           to="/test/route2"
-        >route2</Link>
+        >bloc pattern</Link>
         <Link to="/test/react-transition-group" className={routerLink}>TEST transition</Link>
         <Link to="/test/dnd-test" className={routerLink}>DND</Link>
         <Link to="/webgl" className={routerLink}>webgl</Link>

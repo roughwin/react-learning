@@ -44,7 +44,7 @@ function trans(arrs) {
   }));
 }
 
-function isPosValid(newPos, startPos, isFirst) {
+function isPosValid(newPos, startPos) {
   const [a1, b1, c1] = newPos;
   const [a0, b0, c0] = startPos;
   const asame = a1 === a0; const bsame = b1 === b0; const
@@ -58,10 +58,10 @@ function isPosValid(newPos, startPos, isFirst) {
   return newPos;
 }
 
-function getPos(line, char, startPos, isFirst=false) {
-  const [a0, b0, c0] = startPos;
-  let a = a0; let b = b0; let
-    c = c0;
+function getPos(line, char, lastPos) {
+  const [a0, b0, c0] = lastPos;
+  let a = a0; let b = b0; let c = c0;
+  const result = [];
   for (; a < line.length; a += 1, b = 0, c = 0) {
     const word = line[a];
     for (; b < word.length; b += 1, c = 0) {
@@ -70,14 +70,18 @@ function getPos(line, char, startPos, isFirst=false) {
         const strarr = str.split('');
         const t = strarr[c] || '';
         if (t.toUpperCase() === char.toUpperCase()) {
-          const result = isPosValid([a, b, c], [a0, b0, c0]);
-          if (result) return result;
+          if (isPosValid([a, b, c], lastPos)) {
+            result.push([a, b, c]);
+          } else {
+            break;
+          }
         }
       }
     }
   }
-  return false;
+  return result;
 }
+
 
 /**
  *
@@ -86,18 +90,30 @@ function getPos(line, char, startPos, isFirst=false) {
  */
 function rank(line, test) {
   const testArr = test.split('');
-  let rankNum = 0;
   let startPos = [0, 0, -1];
-  for (const c of testArr) {
-    const pos = getPos(line, c, startPos);
-    if (pos) {
-      startPos = pos;
-      rankNum += 1;
-    } else {
-      return 0;
+  const x = getSubTestRank(line, testArr, startPos, 0)
+  console.log(test, x)
+  return x;
+}
+
+function max(arr = []) {
+  return arr.reduce((m, current) => {
+    if (current > m) {
+      return current;
     }
+    return m;
+  }, 0)
+}
+
+function getSubTestRank(line, subTest, startPos, parentRank) {
+  if (!subTest.length) return parentRank;
+  const positions = getPos(line, subTest[0], startPos);
+  if (positions && positions.length) {
+    const newSubranks = positions.map((newPos, index) => getSubTestRank(line, subTest.slice(1), newPos, parentRank + 1));
+    return max(newSubranks);
+  } else {
+    return 0;
   }
-  return rankNum;
 }
 
 function test() {

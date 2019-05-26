@@ -22,9 +22,10 @@ function genPinyin(s) {
   sarr.forEach(c => {
     const x = map[c];
     if (x) {
-      r.push(x);
+      r.push(x.concat(c));
+    } else {
+      r.push([c])
     }
-    r.push([c]);
   });
   return r;
 }
@@ -55,6 +56,9 @@ function isPosValid(newPos, startPos) {
   if (asame && bsame && csame) {
     return false;
   }
+  if (!asame && (c1 > 0)) {
+    return false;
+  }
   return newPos;
 }
 
@@ -72,12 +76,12 @@ function getPos(line, char, lastPos) {
         if (t.toUpperCase() === char.toUpperCase()) {
           if (isPosValid([a, b, c], lastPos)) {
             result.push([a, b, c]);
-          } else {
-            break;
           }
         }
       }
     }
+    if (result.length)
+      break;
   }
   return result;
 }
@@ -109,7 +113,15 @@ function getSubTestRank(line, subTest, startPos, parentRank) {
   if (!subTest.length) return parentRank;
   const positions = getPos(line, subTest[0], startPos);
   if (positions && positions.length) {
-    const newSubranks = positions.map((newPos, index) => getSubTestRank(line, subTest.slice(1), newPos, parentRank + 1));
+    const newSubranks = positions.map((newPos) => {
+      let newRank = parentRank;
+      if (newPos[0] === 0)
+        newRank = 1;
+      if (newPos[0] !== startPos[0]) {
+        newRank = parentRank + 1
+      }
+      return getSubTestRank(line, subTest.slice(1), newPos, newRank)
+    });
     return max(newSubranks);
   } else {
     return 0;
@@ -117,10 +129,11 @@ function getSubTestRank(line, subTest, startPos, parentRank) {
 }
 
 function test() {
-  const line = genPinyin('合作项目')
+  const line = genPinyin('合作项目abc')
   console.log(line)
-  const t = 'hz'
-  const r = rank(line, t)
+  const t = 'heuxbc'
+  const r = rank(line, 'heuxbc');
+  rank(line, 'hzxma')
   console.log(r)
 }
 test()
